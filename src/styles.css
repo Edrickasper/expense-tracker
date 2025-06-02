@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.cat-type {
+    @apply flex items-center border border-black rounded-full p-1 w-1/4 justify-center mx-2 cursor-pointer;
+}
+
+.cat-name {
+    @apply mb-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4;
+}
+
+.input-field {
+    @apply pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4
+}
