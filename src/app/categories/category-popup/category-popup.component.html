@@ -1,0 +1,116 @@
+<form class="p-4" [formGroup]="addCategory" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title class="relative p-0">{{ this.title }}</h1>
+  <div mat-dialog-content class="">
+    <button (click)="closePopup()">
+      <i class="bi bi-x absolute top-9 right-10 text-[32px] font-bold"></i>
+    </button>
+
+    <section class="mb-4">
+      <label for="cat-name" class="my-2 text-xl mb-5">Category Name</label>
+      <input
+        id="cat-name"
+        placeholder="Category Name"
+        autocomplete="off"
+        class="cat-name"
+        formControlName="catName"
+        autocomplete="off"
+        [class.border-red-600]="
+          addCategory.controls['catName'].invalid &&
+          addCategory.controls['catName'].touched &&
+          addCategory.controls['catName'].pristine
+        "
+      />
+    </section>
+
+    <section class="mb-4">
+      <label class="my-2 text-xl" for="cat-type">Category Type</label>
+      <div id="cat-type" class="flex p-2">
+        <input
+          type="radio"
+          name="type"
+          value="expense"
+          id="type-1"
+          class="hidden"
+          formControlName="type"
+        />
+        <label for="type-1" class="type-label type-1">
+          <i class="bi bi-dash-circle pr-2"></i>
+          Expense
+        </label>
+        <input
+          type="radio"
+          id="type-2"
+          name="type"
+          value="income"
+          class="hidden"
+          formControlName="type"
+        />
+        <label for="type-2" class="type-label type-2">
+          <i class="bi bi-plus-circle pr-2"></i>
+          Income
+        </label>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <label class="my-2 text-xl h-auto" for="colors">Pick a color</label>
+      <div id="colors" class="flex justify-between w-1/2 p-2">
+        <input
+          type="radio"
+          name="color"
+          id="red"
+          class="hidden"
+          value="#dc2626"
+          formControlName="color"
+        />
+        <label for="red" class="color-label red-lab bg-red-600"></label>
+        <input
+          type="radio"
+          name="color"
+          id="blue"
+          class="hidden"
+          value="#2563eb"
+          formControlName="color"
+        />
+        <label for="blue" class="color-label blue-lab bg-blue-600"></label>
+        <input
+          type="radio"
+          name="color"
+          id="green"
+          class="hidden"
+          value="#16a34a"
+          formControlName="color"
+        />
+        <label for="green" class="color-label green-lab bg-green-600"></label>
+      </div>
+    </section>
+
+    <section class="flex items-center my-4">
+      <input
+        type="checkbox"
+        class="size-5"
+        id="fav"
+        formControlName="favourite"
+      />
+      <label for="fav" class="ml-4 text-xl h-auto">Set as Favourite</label>
+    </section>
+  </div>
+  <div mat-dialog-actions>
+    <section class="flex gap-4">
+      <button
+        class="font-bold rounded-lg text-xl w-32 h-14 bg-red-600 text-white justify-center"
+        type="button"
+        (click)="delete()"
+        *ngIf="this.editMode"
+      >
+        Delete
+      </button>
+      <button
+        class="font-bold rounded-lg text-xl w-32 h-14 bg-[#fb923c] text-white justify-center"
+        type="submit"
+      >
+        Save
+      </button>
+    </section>
+  </div>
+</form>

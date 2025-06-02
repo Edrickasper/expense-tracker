@@ -1,4 +1,4 @@
-a:hover {
+.lists:hover {
     border-bottom: 2px solid gray;
     padding-bottom: 8px;
     transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
