@@ -13,15 +13,17 @@ import {
 import { Observable } from 'rxjs';
 
 import { Movement } from '../models/movement.model';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataStorageService {
   private movementCollection!: CollectionReference<DocumentData>;
-  constructor(private firestore: Firestore) {
-    this.movementCollection = collection(this.firestore, 'movements');
-  }
+  constructor(
+    private firestore: Firestore,
+    private authService: AuthenticationService
+  ) {}
 
   addMovement(movement: Movement) {
     return addDoc(this.movementCollection, { ...movement });
