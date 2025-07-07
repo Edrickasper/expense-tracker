@@ -5,4 +5,5 @@ export class Movement {
     public category: string,
     public note: string
   ) {}
+  public id!: string;
 }

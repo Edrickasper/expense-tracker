@@ -9,7 +9,6 @@ import { MovementService } from '../../services/movement.service';
   selector: 'app-movement',
   templateUrl: './movement.component.html',
   styleUrl: './movement.component.css',
-  standalone: false,
 })
 export class MovementComponent implements OnInit {
   movements!: Movement[];
@@ -20,14 +19,14 @@ export class MovementComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {
-    this.movements = this.movementService.getmovements();
-    this.movementDates = this.movementService.buildMovementDates(
-      this.movements
-    );
+  afterMovementChanges() {}
 
+  ngOnInit() {
     this.movementService.movementsChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
+      this.movementDates = this.movementService.buildMovementDates(
+        this.movements
+      );
     });
   }
 
@@ -42,7 +41,6 @@ export class MovementComponent implements OnInit {
     });
     popup.afterClosed().subscribe((movement: Movement) => {
       if (movement) this.movementService.updateMovement(index, movement);
-      this.movements = this.movementService.getmovements();
     });
   }
 

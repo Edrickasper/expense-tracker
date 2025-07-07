@@ -4,13 +4,12 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { SnackBarService } from '../../services/snack-bar.service';
-import { verifyBeforeUpdateEmail } from '@angular/fire/auth';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  standalone: false,
 })
 export class RegisterComponent {
   register!: FormGroup;
@@ -18,7 +17,8 @@ export class RegisterComponent {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private snackBar: SnackBarService
+    private snackBar: SnackBarService,
+    private catService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -27,6 +27,7 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+    this.catService.addInitialCategory();
   }
 
   onSubmit() {
@@ -38,7 +39,7 @@ export class RegisterComponent {
         next: () => {
           this.isLoading = false;
           this.snackBar.showSuccess('Registered Successfully');
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
         },
         error: (err) => {
           this.isLoading = false;

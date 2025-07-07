@@ -10,10 +10,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
 import { AuthGuard } from './authentication/auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
-    path: 'categories',
+    path: '',
     component: CategoriesComponent,
     canActivate: [AuthGuard],
   },
@@ -23,8 +24,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'trash', component: TrashComponent, canActivate: [AuthGuard] },
-  { path: '', component: LoginComponent },
-  { path: 'signup', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'edit', component: EditProfileComponent },
     ],
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

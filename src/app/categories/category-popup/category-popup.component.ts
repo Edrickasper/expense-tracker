@@ -9,12 +9,12 @@ import { CategoryService } from '../../services/category.service';
   selector: 'app-category-popup',
   templateUrl: './category-popup.component.html',
   styleUrl: './category-popup.component.css',
-  standalone: false,
 })
 export class CategoryPopupComponent implements OnInit {
   category!: Category;
   editMode = false;
   index!: number;
+  id!: string;
   addCategory!: FormGroup;
   title = 'Add Category';
 
@@ -38,6 +38,7 @@ export class CategoryPopupComponent implements OnInit {
       type = this.category.type;
       color = this.category.color;
       favourite = this.category.favourite;
+      this.id = this.category.id;
     }
 
     this.addCategory = new FormGroup({

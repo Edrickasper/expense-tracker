@@ -12,6 +12,7 @@
         id="date"
         class="input-field"
         formControlName="date"
+        [readonly]="isTrashMode"
       />
     </section>
 
@@ -24,6 +25,7 @@
         id="amount"
         class="input-field"
         formControlName="amount"
+        [readonly]="isTrashMode"
       />
     </section>
 
@@ -35,7 +37,11 @@
         class="input-field"
         formControlName="category"
       >
-        <option *ngFor="let category of categories" value="{{ category.name }}">
+        <option
+          *ngFor="let category of categories"
+          value="{{ category.name }}"
+          [disabled]="isTrashMode"
+        >
           {{ category.name }}
         </option>
       </select>
@@ -46,8 +52,9 @@
       <textarea
         name="note"
         id="note"
-        class="input-field"
+        class="input-field mb-2"
         formControlName="note"
+        [readonly]="isTrashMode"
       ></textarea>
     </section>
   </div>
@@ -56,12 +63,30 @@
       <button
         class="font-bold rounded-lg text-xl w-32 h-14 bg-red-600 text-white justify-center"
         type="button"
-        (click)="delete()"
+        (click)="trash()"
         *ngIf="this.editMode"
       >
         Delete
       </button>
       <button
+        *ngIf="isTrashMode"
+        class="font-bold rounded-lg text-xl w-32 h-14 bg-green-600 text-white justify-center"
+        type="button"
+        (click)="restore()"
+      >
+        Restore
+      </button>
+
+      <button
+        *ngIf="isTrashMode"
+        class="font-bold rounded-lg text-xl w-32 h-14 bg-red-700 text-white justify-center"
+        type="button"
+        (click)="delete()"
+      >
+        Delete Permanently
+      </button>
+      <button
+        *ngIf="!isTrashMode"
         class="font-bold rounded-lg text-xl w-32 h-14 bg-[#fb923c] text-white justify-center"
         type="submit"
       >

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { EventEmitter, inject, Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -10,7 +10,9 @@ import {
   user,
   verifyBeforeUpdateEmail,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+
+import { CategoryService } from './category.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +20,26 @@ import { from, Observable } from 'rxjs';
 export class AuthenticationService {
   private firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
-  curUser!: User;
+  private uidSubject = new BehaviorSubject<string | null>(null);
+  public uid$: Observable<string | null> = this.uidSubject.asObservable();
+  addCatinDB = new EventEmitter<string>();
+
+  constructor() {
+    this.user$.subscribe((firebaseUser: User | null) => {
+      if (firebaseUser) {
+        this.uidSubject.next(firebaseUser.uid);
+      } else {
+        this.uidSubject.next(null);
+      }
+    });
+  }
 
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
       password
-    ).then((res) => {
-      console.log();
-    });
+    ).then(() => {});
 
     return from(promise);
   }
@@ -41,26 +53,26 @@ export class AuthenticationService {
       this.firebaseAuth,
       email,
       password
-    ).then((userCredentials) =>
+    ).then((userCredentials) => {
+      this.addCatinDB.emit(userCredentials.user.uid);
       updateProfile(userCredentials.user, {
         displayName: username,
         photoURL:
           'https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png',
-      })
-    );
+      });
+    });
     return from(promise);
   }
 
   updateProfile(username: string, email: string) {
-    updateProfile(this.curUser, { displayName: username });
-    verifyBeforeUpdateEmail(this.curUser, email);
-    updateEmail(this.curUser, email).then((resp) => {
-      console.log(resp);
-    });
+    // updateProfile(this.curUser, { displayName: username });
+    // verifyBeforeUpdateEmail(this.curUser, email);
+    // updateEmail(this.curUser, email).then((resp) => {
+    //   console.log(resp);
+    // });
   }
 
   signOut(): Observable<void> {
-    const promise = signOut(this.firebaseAuth).then(() => {});
-    return from(promise);
+    return from(signOut(this.firebaseAuth).then(() => {}));
   }
 }

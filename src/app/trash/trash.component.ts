@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Movement } from '../models/movement.model';
-import { RestorePopupComponent } from './restore-popup/restore-popup.component';
 import { MovementService } from '../services/movement.service';
+import { MovementPopupComponent } from '../movements/movement-popup/movement-popup.component';
+import { TrashService } from '../services/trash.service';
+import { SnackBarService } from '../services/snack-bar.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-trash',
@@ -15,21 +18,36 @@ export class TrashComponent implements OnInit {
   movementsDate!: boolean[];
   prevDate!: string;
   isEmpty = false;
+  isLoading: boolean = false;
 
   constructor(
     private dialog: MatDialog,
-    private movementService: MovementService
+    private movementService: MovementService,
+    private trashService: TrashService,
+    private snackBar: SnackBarService
   ) {}
 
   ngOnInit() {
-    this.trash = this.movementService.getTrash();
-    this.movementService.trashChanged.subscribe((movements: Movement[]) => {
+    this.isLoading = true;
+    this.trashService
+      .fetchTrash()
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.snackBar.showError(err);
+        },
+      });
+    this.trashService.trashChanged.subscribe((movements: Movement[]) => {
       this.trash = movements;
+      this.movementsDate = this.movementService.buildMovementDates(this.trash);
+      if (!this.trash[0]) {
+        this.isEmpty = true;
+      }
     });
-    if (!this.trash) {
-      this.isEmpty = true;
-    }
-    this.movementsDate = this.movementService.buildMovementDates(this.trash);
   }
 
   formatCur(value: number) {
@@ -41,9 +59,15 @@ export class TrashComponent implements OnInit {
   }
 
   onrestoreMovement(index: number) {
-    const popup = this.dialog.open(RestorePopupComponent);
-    popup.afterClosed().subscribe((restore: boolean) => {
-      if (restore) this.movementService.restoreMovement(index);
+    const popup = this.dialog.open(MovementPopupComponent, {
+      disableClose: true,
+      width: '60%',
+      height: 'auto',
+      data: {
+        index: index,
+        isTrashMode: true,
+      },
     });
+    popup.afterClosed().subscribe();
   }
 }

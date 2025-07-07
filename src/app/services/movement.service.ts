@@ -12,16 +12,11 @@ export class MovementService {
   constructor(private dataStorageService: DataStorageService) {}
 
   movementsChanged = new Subject<Movement[]>();
-  trashChanged = new Subject<Movement[]>();
 
   private movements: Movement[] = [
     /* new Movement('Thu Oct 31 2024', 5000, 'Clothes', 'Diwali'),
     new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner'),
     new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali'), */
-  ];
-
-  private trash: Movement[] = [
-    new Movement('Mon Oct 21 2024', 5000, 'Travel', 'Diwali'),
   ];
 
   buildMovementDates(movements: Movement[]) {
@@ -39,9 +34,10 @@ export class MovementService {
   }
 
   onFetchMovement() {
-    return this.dataStorageService.fetchMovements().pipe<Movement[]>(
-      tap((movements) => {
+    return this.dataStorageService.fetchMovements().pipe(
+      tap((movements: Movement[]) => {
         this.movements = movements;
+        this.movementsChanged.next(this.getmovements());
       })
     );
   }
@@ -56,37 +52,19 @@ export class MovementService {
 
   addMovement(movement: Movement) {
     this.movements.push(movement);
-    this.dataStorageService.addMovement(movement);
+    this.dataStorageService.addMovementinDB(movement);
     this.movementsChanged.next(this.getmovements());
   }
 
   updateMovement(index: number, movement: Movement) {
     this.movements[index] = movement;
+    this.dataStorageService.updateMovementinDB(movement);
     this.movementsChanged.next(this.getmovements());
   }
 
-  // Trash
-  getTrash() {
-    return this.trash.slice();
-  }
-
-  getTrashById(index: number) {
-    return this.trash[index];
-  }
-
-  deleteMovement(index: number) {
-    let movement = this.getMovementById(index);
-    this.trash.push(movement);
+  trashMovement(index: number, movement: Movement) {
+    this.dataStorageService.deleteMovementinDB(movement);
     this.movements.splice(index, 1);
     this.movementsChanged.next(this.getmovements());
-    this.trashChanged.next(this.getTrash());
-  }
-
-  restoreMovement(index: number) {
-    let movement = this.getTrashById(index);
-    this.movements.push(movement);
-    this.trash.splice(index, 1);
-    this.movementsChanged.next(this.getmovements());
-    this.trashChanged.next(this.getTrash());
   }
 }

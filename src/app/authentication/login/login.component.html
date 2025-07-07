@@ -1,8 +1,6 @@
-@if (isLoading) {
 <div>
-  <app-spinner></app-spinner>
+  <app-spinner *ngIf="isLoading"></app-spinner>
 </div>
-}
 <section class="flex w-full h-screen absolute top-0 left-0 bg-gray-300">
   <div
     class="flex flex-col justify-center m-auto h-3/5 w-2/5 bg-white relative rounded-2xl p-8"
@@ -96,7 +94,7 @@
       >
         Don't have an accout yet?
         <a
-          routerLink="/signup"
+          routerLink="/register"
           class="font-medium text-[#4F46E5] hover:underline"
           >Sign Up</a
         >

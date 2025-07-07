@@ -1,7 +1,10 @@
-<nav class="h-20 flex bg-gray-100 justify-end items-center">
+<nav class="h-20 bg-gray-100 flex justify-between">
+  <div class="h-full flex items-center mx-8">
+    <span class="text-xl cursor-pointer" routerLink="/">Expense Tracker</span>
+  </div>
   <ul class="flex w-1/2 justify-around items-center">
     <li routerLinkActive="active">
-      <a routerLink="/categories" class="lists">Categories</a>
+      <a routerLink="/" class="lists">Categories</a>
     </li>
     <li routerLinkActive="active">
       <a routerLink="/movements" class="lists">Movements</a>
@@ -11,25 +14,17 @@
     </li>
     <li routerLinkActive="active">
       @if (user) {
-      <div
-        class="relative flex items-center gap-3 cursor-pointer"
-        [matMenuTriggerFor]="menu"
-      >
-        <img
-          class="size-12 rounded-full"
-          src="{{ user?.photoURL }}"
-          alt="Profile Pic"
-          loading="lazy"
-        />
-        <p>{{ user?.displayName }}</p>
+      <div class="relative flex items-center gap-3 cursor-pointer" [matMenuTriggerFor]="menu">
+        <img class="size-12 rounded-full" src="{{ user.photoURL }}" alt="Profile Pic" loading="lazy" />
+        <p>{{ user.displayName }}</p>
         <mat-menu #menu="matMenu">
-          <li mat-menu-item routerLink="/profile"><a>Profile</a></li>
-          <li mat-menu-item (click)="logOut()">Log Out</li>
-        </mat-menu>
-      </div>
-      } @else {
-      <a routerLink="/">Log In</a>
-      }
+    <li mat-menu-item routerLink="/profile"><a>Profile</a></li>
+    <li mat-menu-item (click)="logOut()">Log Out</li>
+    </mat-menu>
+    </div>
+    } @else {
+    <a routerLink="/">Log In</a>
+    }
     </li>
   </ul>
 </nav>

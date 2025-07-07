@@ -9,7 +9,6 @@ import { SnackBarService } from '../../services/snack-bar.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  standalone: false,
 })
 export class LoginComponent implements OnInit {
   constructor(
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit {
       next: () => {
         this.isLoading = false;
         this.snackBar.showSuccess('Login successful!');
-        this.router.navigateByUrl('/categories');
+        this.router.navigateByUrl('/');
       },
       error: (err) => {
         this.isLoading = false;

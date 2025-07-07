@@ -9,6 +9,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,13 +24,11 @@ import { MovementsComponent } from './movements/movements.component';
 import { MovementComponent } from './movements/movement/movement.component';
 import { MovementPopupComponent } from './movements/movement-popup/movement-popup.component';
 import { TrashComponent } from './trash/trash.component';
-import { RestorePopupComponent } from './trash/restore-popup/restore-popup.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
-import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
@@ -52,11 +52,11 @@ const firebaseConfig = {
     MovementPopupComponent,
     CategoryComponent,
     TrashComponent,
-    RestorePopupComponent,
     ProfileComponent,
     EditProfileComponent,
     DisplayProfileComponent,
     SpinnerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

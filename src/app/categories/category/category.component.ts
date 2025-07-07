@@ -9,7 +9,6 @@ import { CategoryPopupComponent } from '../category-popup/category-popup.compone
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
-  standalone: false,
 })
 export class CategoryComponent implements OnInit {
   constructor(
