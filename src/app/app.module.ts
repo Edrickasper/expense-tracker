@@ -30,7 +30,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
+  apiKey: '',
   authDomain: 'transaction-manager-ae91b.firebaseapp.com',
   projectId: 'transaction-manager-ae91b',
   storageBucket: 'transaction-manager-ae91b.firebasestorage.app',
