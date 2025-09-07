@@ -31,7 +31,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
+  apiKey: '',
   authDomain: 'transaction-manager-ae91b.firebaseapp.com',
   projectId: 'transaction-manager-ae91b',
   storageBucket: 'transaction-manager-ae91b.firebasestorage.app',
