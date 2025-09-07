@@ -1,0 +1,31 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div *ngFor="let movement of trash; let i = index">
+  <h1
+    class="mx-auto my-4 w-9/12 font-semibold text-lg mb-2"
+    *ngIf="movementsDate[i]"
+  >
+    {{ movement.date }}
+  </h1>
+  <div class="flex flex-col items-center">
+    <ul class="w-3/5">
+      <li
+        class="flex justify-between items-center border-2 border-black rounded-2xl py-2 px-10 my-2 cursor-pointer"
+        (click)="onrestoreMovement(i)"
+      >
+        <section>
+          <h3 class="font-medium">{{ movement.category }}</h3>
+          <p>{{ movement.note }}</p>
+        </section>
+        <span>{{ formatCur(movement.amount) }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div
+  class="flex flex-col justify-center items-center h-[calc(100vh-80px)]"
+  *ngIf="this.isEmpty"
+>
+  <h1 class="text-2xl text-gray-500">Trash is empty</h1>
+  <br />
+  <i class="bi bi-trash text-gray-500 text-4xl"></i>
+</div>

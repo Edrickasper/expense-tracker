@@ -1,2 +1,3 @@
-<app-header *ngIf="this.authService.Loggedin"></app-header>
+<app-spinner *ngIf="isLoading"></app-spinner>
+<app-header [user]="this.user"></app-header>
 <router-outlet></router-outlet>

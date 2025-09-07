@@ -1,0 +1,21 @@
+<ul class="grid grid-cols-5 mt-4">
+  <li
+    class="flex relative items-center my-4 m-auto p-8 rounded-2xl w-64 border shadow-xl border-gray-400 text-2xl font-bold text-[#374151] cursor-pointer"
+    *ngFor="let category of categories; let i = index"
+    (click)="openPopup(i)"
+  >
+    <i
+      class="bi bi-dash-circle text-2xl mr-3"
+      *ngIf="category.type === 'expense'"
+    ></i>
+    <i
+      class="bi bi-plus-circle text-2xl mr-3"
+      *ngIf="category.type === 'income'"
+    ></i>
+    {{ category.name }}
+    <i
+      class="bi bi-star-fill absolute right-12 text-yellow-300"
+      *ngIf="category.favourite"
+    ></i>
+  </li>
+</ul>

@@ -1,0 +1,60 @@
+<div>
+  <button routerLink="/profile">
+    <i class="bi bi-arrow-left text-xl"></i>
+  </button>
+</div>
+<div>
+  <form [formGroup]="profile" (ngSubmit)="onSubmit()">
+    <section class="flex gap-2 items-center justify-center">
+      <img
+        src="{{ user?.photoURL }}"
+        alt="profile"
+        loading="lazy"
+        class="size-52 rounded-full"
+      />
+      <input type="file" accept="image/*" id="profile" hidden />
+      <!-- <label
+      for="profile"
+      class="border p-2 bg-green-700 text-white rounded-lg cursor-pointer"
+      >Upload Profile Picture</label
+      > -->
+    </section>
+    <section class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
+        <label class="px-2" for="name">User Name</label>
+        <input
+          type="text"
+          id="name"
+          class="p-2 border-2 rounded-md"
+          formControlName="name"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="px-2" for="email">Email</label>
+        <input
+          type="email"
+          class="p-2 border-2 rounded-md"
+          id="email"
+          formControlName="email"
+        />
+        <button type="button" (click)="verifyEmail()"></button>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="px-2" for="email">Phone Number</label>
+        <input
+          type="tel"
+          class="p-2 border-2 rounded-md"
+          formControlName="phoneNo"
+        />
+      </div>
+      <div class="flex justify-center">
+        <button
+          class="mt-4 border p-2 bg-green-700 text-white rounded-lg"
+          type="submit"
+        >
+          Update Profile
+        </button>
+      </div>
+    </section>
+  </form>
+</div>

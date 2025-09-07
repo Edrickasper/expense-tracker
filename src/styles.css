@@ -8,14 +8,32 @@
     padding: 0;
 }
 
-.cat-type {
-    @apply flex items-center border border-black rounded-full p-1 w-1/4 justify-center mx-2 cursor-pointer;
+html,
+body {
+    height: 100%;
 }
 
-.cat-name {
-    @apply mb-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4;
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* background-color: red; */
 }
+
 
 .input-field {
-    @apply pl-12 mb-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4
+    @apply bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: transparent !important;
+}
+
+.snack-success {
+    background-color: #4caf50 !important;
+    color: white !important;
+}
+
+.snack-error {
+    background-color: #f44336 !important;
+    color: white !important;
 }

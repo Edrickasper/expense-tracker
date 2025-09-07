@@ -1,0 +1,22 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<app-movement></app-movement>
+<button
+  class="fixed bg-orange-400 p-4 bottom-12 right-12 rounded-lg text-white font-bold flex justify-around"
+  (click)="openPopup()"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="size-6 mr-2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M12 4.5v15m7.5-7.5h-15"
+    />
+  </svg>
+  Add Movement
+</button>

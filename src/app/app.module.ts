@@ -4,56 +4,78 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { CategoryComponent } from './category/category.component';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { AddTransactionComponent } from './transactions/add-transaction/add-transaction.component';
-import { TransactionService } from './transactions/transaction.service';
-import { CategoryService } from './category/category.service';
-import { AddCategoryComponent } from './category/add-category/add-category.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoryPopupComponent } from './categories/category-popup/category-popup.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { AuthenticationService } from './authentication/authentication.service';
-import { provideHttpClient } from '@angular/common/http';
+import { CategoryComponent } from './categories/category/category.component';
+import { MovementsComponent } from './movements/movements.component';
+import { MovementComponent } from './movements/movement/movement.component';
+import { MovementPopupComponent } from './movements/movement-popup/movement-popup.component';
+import { TrashComponent } from './trash/trash.component';
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const firebaseConfig = {
-  apiKey:  /* API key */,
-  authDomain: "transaction-manager-ae91b.firebaseapp.com",
-  projectId: "transaction-manager-ae91b",
-  storageBucket: "transaction-manager-ae91b.firebasestorage.app",
-  messagingSenderId: "918381907162",
-  appId: "1:918381907162:web:e1cf8e746bdd90797429e3"
+  apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
+  authDomain: 'transaction-manager-ae91b.firebaseapp.com',
+  projectId: 'transaction-manager-ae91b',
+  storageBucket: 'transaction-manager-ae91b.firebasestorage.app',
+  messagingSenderId: '918381907162',
+  appId: '1:918381907162:web:e1cf8e746bdd90797429e3',
 };
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    CategoryComponent,
-    TransactionsComponent,
-    AddTransactionComponent,
-    AddCategoryComponent,
+    CategoriesComponent,
+    MovementsComponent,
+    MovementComponent,
+    CategoryPopupComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    MovementPopupComponent,
+    CategoryComponent,
+    TrashComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    DisplayProfileComponent,
+    SpinnerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatMenuModule,
   ],
   providers: [
-    TransactionService,
-    CategoryService,
     provideHttpClient(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    AuthenticationService
-    
+    provideAnimationsAsync('noop'),
+    provideAnimationsAsync(),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
