@@ -13,21 +13,39 @@ import { MovementService } from '../../services/movement.service';
 export class MovementComponent implements OnInit {
   movements!: Movement[];
   movementDates!: boolean[];
+  groupedMovements: { date: string; items: any[] }[] = [];
 
   constructor(
     private movementService: MovementService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
-  afterMovementChanges() {}
+  afterMovementChanges() { }
 
   ngOnInit() {
     this.movementService.movementsChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
-      this.movementDates = this.movementService.buildMovementDates(
-        this.movements
-      );
+      this.groupByDate()
     });
+  }
+
+  groupByDate() {
+    const grouped: { [key: string]: any[] } = {};
+
+    this.movements.forEach(tx => {
+      if (!grouped[tx.date]) {
+        grouped[tx.date] = [];
+      }
+      grouped[tx.date].push(tx);
+    });
+
+    // Convert object into array & sort by date (latest first)
+    this.groupedMovements = Object.keys(grouped)
+      .map(date => ({
+        date,
+        items: grouped[date]
+      }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   openPopup(index: number) {

@@ -9,7 +9,7 @@ import { DataStorageService } from './data-storage.service';
   providedIn: 'root',
 })
 export class MovementService {
-  constructor(private dataStorageService: DataStorageService) {}
+  constructor(private dataStorageService: DataStorageService) { }
 
   movementsChanged = new Subject<Movement[]>();
 
@@ -18,20 +18,6 @@ export class MovementService {
     new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner'),
     new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali'), */
   ];
-
-  buildMovementDates(movements: Movement[]) {
-    let movementDates = [];
-    let prevDate = '';
-    for (let movement of movements) {
-      if (prevDate !== movement.date) {
-        movementDates.push(true);
-        prevDate = movement.date;
-      } else {
-        movementDates.push(false);
-      }
-    }
-    return movementDates;
-  }
 
   onFetchMovement() {
     return this.dataStorageService.fetchMovements().pipe(
