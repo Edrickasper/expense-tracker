@@ -18,7 +18,7 @@ export class MovementsComponent implements OnInit {
     private movementService: MovementService,
     private dialog: MatDialog,
     private snackBar: SnackBarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;

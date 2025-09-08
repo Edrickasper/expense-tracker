@@ -12,7 +12,6 @@ import { MovementService } from '../../services/movement.service';
 })
 export class MovementComponent implements OnInit {
   movements!: Movement[];
-  movementDates!: boolean[];
   groupedMovements: { date: string; items: any[] }[] = [];
 
   constructor(
