@@ -29,15 +29,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-
-const firebaseConfig = {
-  apiKey: '',
-  authDomain: 'transaction-manager-ae91b.firebaseapp.com',
-  projectId: 'transaction-manager-ae91b',
-  storageBucket: 'transaction-manager-ae91b.firebasestorage.app',
-  messagingSenderId: '918381907162',
-  appId: '1:918381907162:web:e1cf8e746bdd90797429e3',
-};
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -70,7 +62,7 @@ const firebaseConfig = {
   ],
   providers: [
     provideHttpClient(),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideAnimationsAsync('noop'),

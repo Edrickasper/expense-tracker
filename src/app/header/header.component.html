@@ -39,6 +39,7 @@
 
       <!-- Center: Links (hidden on mobile) -->
       <div class="hidden md:flex items-center text-sm space-x-6 list-none">
+        @if (user) {
         <li routerLinkActive="active">
           <a
             routerLink="/"
@@ -61,7 +62,6 @@
           >
         </li>
         <li routerLinkActive="active" class="font-medium text-gray-600">
-          @if (user) {
           <div
             class="relative flex items-center gap-3 cursor-pointer"
             [matMenuTriggerFor]="menu"
@@ -74,10 +74,8 @@
               <li mat-menu-item (click)="logOut()">Log Out</li>
             </mat-menu>
           </div>
-          } @else {
-          <a routerLink="/">Log In</a>
-          }
         </li>
+        }
       </div>
 
       <!-- Mobile Menu Button -->
