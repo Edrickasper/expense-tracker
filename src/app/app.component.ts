@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 
 import { AuthenticationService } from './services/authentication.service';
+import { MovementService } from './services/movement.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private movService: MovementService) { }
   title = 'expense-tracker';
   isLoading = false;
   user!: User;
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
       next: (user: any) => {
         if (user) {
           this.user = user;
+          this.movService.onFetchMovement().subscribe();
           this.isLoading = false;
         } else {
           this.isLoading = false;

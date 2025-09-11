@@ -18,22 +18,22 @@ export class MovementsComponent implements OnInit {
     private movementService: MovementService,
     private dialog: MatDialog,
     private snackBar: SnackBarService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.movementService
-      .onFetchMovement()
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.snackBar.showError(err);
-        },
-      });
+    // this.isLoading = true;
+    // this.movementService
+    //   .onFetchMovement()
+    //   .pipe(take(1))
+    //   .subscribe({
+    //     next: () => {
+    //       this.isLoading = false;
+    //     },
+    //     error: (err) => {
+    //       this.isLoading = false;
+    //       this.snackBar.showError(err);
+    //     },
+    //   });
   }
 
   openPopup() {

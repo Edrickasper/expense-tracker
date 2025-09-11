@@ -25,7 +25,7 @@ export class TrashComponent implements OnInit {
     private movementService: MovementService,
     private trashService: TrashService,
     private snackBar: SnackBarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -43,7 +43,7 @@ export class TrashComponent implements OnInit {
       });
     this.trashService.trashChanged.subscribe((movements: Movement[]) => {
       this.trash = movements;
-      this.movementsDate = this.movementService.buildMovementDates(this.trash);
+      // this.movementsDate = this.movementService.buildMovementDates(this.trash);
       if (!this.trash[0]) {
         this.isEmpty = true;
       }

@@ -4,6 +4,6 @@ export class Category {
     public type: string,
     public color: string,
     public favourite: boolean
-  ) {}
+  ) { }
   public id!: string;
 }
