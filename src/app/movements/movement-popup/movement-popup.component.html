@@ -1,4 +1,4 @@
-<form class="p-4" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
+<!-- <form class="p-4" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
   <h1 mat-dialog-title class="relative heading">{{ this.title }}</h1>
   <div mat-dialog-content>
     <button (click)="closePopup()">
@@ -16,7 +16,6 @@
       />
     </section>
 
-    <!-- Pattern -->
     <section class="my-4">
       <label for="amount" class="my-2 text-xl">Enter Amount</label>
       <input
@@ -93,5 +92,94 @@
         Save
       </button>
     </section>
+  </div>
+</form>
+ -->
+
+<form class="p-6 space-y-6" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
+  <!-- Header -->
+  <header class="flex justify-between items-center">
+    <h1 mat-dialog-title class="text-2xl font-semibold">
+      {{ title }}
+    </h1>
+    <button
+      type="button"
+      (click)="closePopup()"
+      class="text-gray-500 hover:text-red-500"
+    >
+      <i class="bi bi-x text-3xl font-bold"></i>
+    </button>
+  </header>
+
+  <!-- Content -->
+  <div mat-dialog-content class="space-y-4">
+    <!-- Date -->
+    <section>
+      <label for="date" class="block text-lg font-medium mb-2">Date</label>
+      <input
+        type="date"
+        id="date"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+        formControlName="date"
+      />
+    </section>
+
+    <!-- Amount -->
+    <section>
+      <label for="amount" class="block text-lg font-medium mb-2">Amount</label>
+      <input
+        type="number"
+        id="amount"
+        placeholder="Enter amount"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+        formControlName="amount"
+      />
+    </section>
+
+    <!-- Category -->
+    <section>
+      <label for="categories" class="block text-lg font-medium mb-2"
+        >Category</label
+      >
+      <select
+        id="categories"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-white focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+        formControlName="category"
+      >
+        <option *ngFor="let category of categories" [value]="category.name">
+          {{ category.name }}
+        </option>
+      </select>
+    </section>
+
+    <!-- Note -->
+    <section>
+      <label for="note" class="block text-lg font-medium mb-2">Note</label>
+      <textarea
+        id="note"
+        rows="3"
+        placeholder="Optional note..."
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+        formControlName="note"
+      ></textarea>
+    </section>
+  </div>
+
+  <!-- Footer Actions -->
+  <div mat-dialog-actions class="flex justify-end gap-4 pt-4">
+    <button
+      *ngIf="editMode"
+      class="rounded-lg text-lg px-6 py-3 bg-red-600 text-white hover:bg-red-700 transition font-semibold"
+      type="button"
+      (click)="trash()"
+    >
+      Delete
+    </button>
+    <button
+      class="rounded-lg text-lg px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 transition font-semibold"
+      type="submit"
+    >
+      Save
+    </button>
   </div>
 </form>
