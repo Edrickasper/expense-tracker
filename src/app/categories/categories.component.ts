@@ -23,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true
+    /* this.isLoading = true
     this.categoryService
       .onFetchCategory()
       .pipe(take(1))
@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
           this.isLoading = false;
           this.snackBar.showError(err);
         },
-      });
+      }); */
   }
 
   openPopup() {

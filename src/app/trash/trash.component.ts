@@ -7,6 +7,7 @@ import { MovementPopupComponent } from '../movements/movement-popup/movement-pop
 import { TrashService } from '../services/trash.service';
 import { SnackBarService } from '../services/snack-bar.service';
 import { take } from 'rxjs';
+import { Category } from '../models/category.model';
 
 @Component({
   selector: 'app-trash',
@@ -14,11 +15,11 @@ import { take } from 'rxjs';
   styleUrl: './trash.component.css',
 })
 export class TrashComponent implements OnInit {
-  trash!: Movement[];
-  movementsDate!: boolean[];
-  prevDate!: string;
-  isEmpty = false;
+
   isLoading: boolean = false;
+  movements!: Movement[]
+  groupedMovements: { date: string; items: any[] }[] = [];
+  categories: Category[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -27,27 +28,64 @@ export class TrashComponent implements OnInit {
     private snackBar: SnackBarService
   ) { }
 
+  restoreMovement(mov: Movement) {
+    throw new Error('Method not implemented.');
+  }
+
+  deleteMovementForever(mov: Movement) {
+    throw new Error('Method not implemented.');
+  }
+
+  restoreCategory(cat: Category) {
+    throw new Error('Method not implemented.');
+  }
+
+  deleteCategoryForever(cat: Category) {
+    throw new Error('Method not implemented.');
+  }
+
+  emptyTrash() {
+    throw new Error('Method not implemented.');
+  }
+
   ngOnInit() {
     this.isLoading = true;
-    this.trashService
+    /* this.trashService
       .fetchTrash()
       .pipe(take(1))
       .subscribe({
-        next: () => {
+        next: (res) => {
           this.isLoading = false;
+          this.movements = res
+          this.groupByDate();
         },
         error: (err) => {
           this.isLoading = false;
           this.snackBar.showError(err);
         },
-      });
+      }); */
     this.trashService.trashChanged.subscribe((movements: Movement[]) => {
-      this.trash = movements;
-      // this.movementsDate = this.movementService.buildMovementDates(this.trash);
-      if (!this.trash[0]) {
-        this.isEmpty = true;
-      }
+      this.movements = movements;
     });
+  }
+
+  groupByDate() {
+    const grouped: { [key: string]: any[] } = {};
+
+    this.groupedMovements.forEach(tx => {
+      if (!grouped[tx.date]) {
+        grouped[tx.date] = [];
+      }
+      grouped[tx.date].push(tx);
+    });
+
+    // Convert object into array & sort by date (latest first)
+    this.groupedMovements = Object.keys(grouped)
+      .map(date => ({
+        date,
+        items: grouped[date]
+      }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
   formatCur(value: number) {

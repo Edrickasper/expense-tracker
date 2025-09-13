@@ -10,7 +10,7 @@ import { MovementService } from './services/movement.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthenticationService, private movService: MovementService) { }
+  constructor(private authService: AuthenticationService) { }
   title = 'expense-tracker';
   isLoading = false;
   user!: User;
@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
       next: (user: any) => {
         if (user) {
           this.user = user;
-          this.movService.onFetchMovement().subscribe();
           this.isLoading = false;
         } else {
           this.isLoading = false;
