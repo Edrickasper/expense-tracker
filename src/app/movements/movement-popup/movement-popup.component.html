@@ -1,102 +1,4 @@
-<!-- <form class="p-4" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
-  <h1 mat-dialog-title class="relative heading">{{ this.title }}</h1>
-  <div mat-dialog-content>
-    <button (click)="closePopup()">
-      <i class="bi bi-x absolute top-9 right-10 text-[32px] font-bold"></i>
-    </button>
-    <section class="">
-      <label for="date" class="my-2 text-xl mb-5">Enter Date</label>
-      <input
-        type="date"
-        name="date"
-        id="date"
-        class="input-field"
-        formControlName="date"
-        [readonly]="isTrashMode"
-      />
-    </section>
-
-    <section class="my-4">
-      <label for="amount" class="my-2 text-xl">Enter Amount</label>
-      <input
-        type="number"
-        name="amount"
-        id="amount"
-        class="input-field"
-        formControlName="amount"
-        [readonly]="isTrashMode"
-      />
-    </section>
-
-    <section class="my-4">
-      <label for="categories" class="my-2 text-xl">Select Category</label>
-      <select
-        name="categories"
-        id="categories"
-        class="input-field"
-        formControlName="category"
-      >
-        <option
-          *ngFor="let category of categories"
-          value="{{ category.name }}"
-          [disabled]="isTrashMode"
-        >
-          {{ category.name }}
-        </option>
-      </select>
-    </section>
-
-    <section class="my-4">
-      <label for="note" class="my-2 text-xl">Note</label>
-      <textarea
-        name="note"
-        id="note"
-        class="input-field mb-2"
-        formControlName="note"
-        [readonly]="isTrashMode"
-      ></textarea>
-    </section>
-  </div>
-  <div mat-dialog-actions>
-    <section class="flex gap-4">
-      <button
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-red-600 text-white justify-center"
-        type="button"
-        (click)="trash()"
-        *ngIf="this.editMode"
-      >
-        Delete
-      </button>
-      <button
-        *ngIf="isTrashMode"
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-green-600 text-white justify-center"
-        type="button"
-        (click)="restore()"
-      >
-        Restore
-      </button>
-
-      <button
-        *ngIf="isTrashMode"
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-red-700 text-white justify-center"
-        type="button"
-        (click)="delete()"
-      >
-        Delete Permanently
-      </button>
-      <button
-        *ngIf="!isTrashMode"
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-[#fb923c] text-white justify-center"
-        type="submit"
-      >
-        Save
-      </button>
-    </section>
-  </div>
-</form>
- -->
-
-<form class="p-6 space-y-6" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
+<form class="p-6" [formGroup]="addMovement" (ngSubmit)="onSubmit()">
   <!-- Header -->
   <header class="flex justify-between items-center">
     <h1 mat-dialog-title class="text-2xl font-semibold">
@@ -112,7 +14,7 @@
   </header>
 
   <!-- Content -->
-  <div mat-dialog-content class="space-y-4">
+  <div mat-dialog-content class="space-y-6">
     <!-- Date -->
     <section>
       <label for="date" class="block text-lg font-medium mb-2">Date</label>
@@ -169,16 +71,19 @@
   <div mat-dialog-actions class="flex justify-end gap-4 pt-4">
     <button
       *ngIf="editMode"
-      class="rounded-lg text-lg px-6 py-3 bg-red-600 text-white hover:bg-red-700 transition font-semibold"
       type="button"
       (click)="trash()"
+      class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-base font-medium text-white bg-red-500 shadow-sm hover:bg-red-600 active:scale-95 transition-all duration-200 ease-out"
     >
+      <i class="bi bi-trash3"></i>
       Delete
     </button>
+
     <button
-      class="rounded-lg text-lg px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 transition font-semibold"
       type="submit"
+      class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-base font-medium text-white bg-indigo-500 shadow-sm hover:bg-indigo-600 active:scale-95 transition-all duration-200 ease-out"
     >
+      <i class="bi bi-check2-circle"></i>
       Save
     </button>
   </div>

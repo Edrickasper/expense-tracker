@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     firebase: {
-        apiKey: '',
+        apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
         authDomain: 'transaction-manager-ae91b.firebaseapp.com',
         projectId: 'transaction-manager-ae91b',
         storageBucket: 'transaction-manager-ae91b.firebasestorage.app',

@@ -1,22 +1,16 @@
 .type-label {
-    @apply text-lg px-3 border border-black p-1 flex items-center w-auto rounded-full cursor-pointer mr-4
+  @apply text-lg px-3 border border-black p-1 flex items-center w-auto rounded-full cursor-pointer mr-4;
 }
 
 .color-label {
-    @apply border h-14 w-14 rounded-full cursor-pointer
+  @apply border h-14 w-14 rounded-full cursor-pointer;
 }
 
-#type-1:checked~.type-1,
-#type-2:checked~.type-2 {
-    @apply bg-[#fb923c] text-white
-}
-
-#red:checked~.red-lab,
-#blue:checked~.blue-lab,
-#green:checked~.green-lab {
-    @apply border-2 border-black
+#type-1:checked ~ .type-1,
+#type-2:checked ~ .type-2 {
+  @apply bg-indigo-600 text-white;
 }
 
 .cat-name {
-    @apply my-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4;
+  @apply my-2 bg-gray-50 text-gray-600 border focus:border-transparent rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 rounded-l-lg py-3 px-4;
 }

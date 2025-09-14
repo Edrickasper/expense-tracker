@@ -19,9 +19,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoryPopupComponent } from './categories/category-popup/category-popup.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { CategoryComponent } from './categories/category/category.component';
 import { MovementsComponent } from './movements/movements.component';
-import { MovementComponent } from './movements/movement/movement.component';
 import { MovementPopupComponent } from './movements/movement-popup/movement-popup.component';
 import { TrashComponent } from './trash/trash.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -37,12 +35,10 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     CategoriesComponent,
     MovementsComponent,
-    MovementComponent,
     CategoryPopupComponent,
     RegisterComponent,
     LoginComponent,
     MovementPopupComponent,
-    CategoryComponent,
     TrashComponent,
     ProfileComponent,
     EditProfileComponent,

@@ -1,30 +1,38 @@
-<form class="p-4" [formGroup]="addCategory" (ngSubmit)="onSubmit()">
-  <h1 mat-dialog-title class="relative p-0">{{ this.title }}</h1>
-  <div mat-dialog-content class="">
-    <button (click)="closePopup()">
-      <i class="bi bi-x absolute top-9 right-10 text-[32px] font-bold"></i>
+<form class="p-6" [formGroup]="addCategory" (ngSubmit)="onSubmit()">
+  <!-- Header -->
+  <header class="flex justify-between items-center">
+    <h1 mat-dialog-title class="text-2xl font-semibold">
+      {{ title }}
+    </h1>
+    <button
+      type="button"
+      (click)="closePopup()"
+      class="text-gray-500 hover:text-red-500"
+    >
+      <i class="bi bi-x text-3xl font-bold"></i>
     </button>
+  </header>
 
-    <section class="mb-4">
-      <label for="cat-name" class="my-2 text-xl mb-5">Category Name</label>
+  <!-- Content -->
+  <div mat-dialog-content class="space-y-6">
+    <!-- Category Name -->
+    <section>
+      <label for="cat-name" class="block text-lg font-medium mb-2"
+        >Category Name</label
+      >
       <input
         id="cat-name"
         placeholder="Category Name"
         autocomplete="off"
-        class="cat-name"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
         formControlName="catName"
-        autocomplete="off"
-        [class.border-red-600]="
-          addCategory.controls['catName'].invalid &&
-          addCategory.controls['catName'].touched &&
-          addCategory.controls['catName'].pristine
-        "
       />
     </section>
 
-    <section class="mb-4">
-      <label class="my-2 text-xl" for="cat-type">Category Type</label>
-      <div id="cat-type" class="flex p-2">
+    <!-- Category Type -->
+    <section>
+      <label class="block text-lg font-medium mb-2">Category Type</label>
+      <div class="flex gap-4">
         <input
           type="radio"
           name="type"
@@ -33,84 +41,79 @@
           class="hidden"
           formControlName="type"
         />
-        <label for="type-1" class="type-label type-1">
-          <i class="bi bi-dash-circle pr-2"></i>
+        <label
+          for="type-1"
+          class="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-indigo-50 type-1 transition"
+        >
+          <i class="bi bi-dash-circle"></i>
           Expense
         </label>
+
         <input
           type="radio"
-          id="type-2"
           name="type"
           value="income"
+          id="type-2"
           class="hidden"
           formControlName="type"
         />
-        <label for="type-2" class="type-label type-2">
-          <i class="bi bi-plus-circle pr-2"></i>
+        <label
+          for="type-2"
+          class="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-indigo-50 type-2 transition"
+        >
+          <i class="bi bi-plus-circle"></i>
           Income
         </label>
       </div>
     </section>
 
-    <section class="mb-4">
-      <label class="my-2 text-xl h-auto" for="colors">Pick a color</label>
-      <div id="colors" class="flex justify-between w-1/2 p-2">
-        <input
-          type="radio"
-          name="color"
-          id="red"
-          class="hidden"
-          value="#dc2626"
-          formControlName="color"
-        />
-        <label for="red" class="color-label red-lab bg-red-600"></label>
-        <input
-          type="radio"
-          name="color"
-          id="blue"
-          class="hidden"
-          value="#2563eb"
-          formControlName="color"
-        />
-        <label for="blue" class="color-label blue-lab bg-blue-600"></label>
-        <input
-          type="radio"
-          name="color"
-          id="green"
-          class="hidden"
-          value="#16a34a"
-          formControlName="color"
-        />
-        <label for="green" class="color-label green-lab bg-green-600"></label>
-      </div>
+    <!-- Color Picker -->
+    <!-- Color Picker -->
+    <section>
+      <label for="color" class="block text-lg font-medium mb-2"
+        >Pick a color</label
+      >
+      <input
+        type="color"
+        id="color"
+        formControlName="color"
+        class="w-14 h-14 p-1 rounded-lg cursor-pointer border border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+      />
     </section>
 
-    <section class="flex items-center my-4">
+    <!-- Favourite -->
+    <section class="flex items-center">
       <input
         type="checkbox"
-        class="size-5"
+        class="size-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
         id="fav"
         formControlName="favourite"
       />
-      <label for="fav" class="ml-4 text-xl h-auto">Set as Favourite</label>
+      <label for="fav" class="ml-3 text-lg">Set as Favourite</label>
     </section>
   </div>
-  <div mat-dialog-actions>
-    <section class="flex gap-4">
-      <button
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-red-600 text-white justify-center"
-        type="button"
-        (click)="delete()"
-        *ngIf="this.editMode"
+
+  <!-- Footer -->
+  <div mat-dialog-actions class="flex justify-end gap-4 pt-4">
+    <button
+      type="submit"
+      class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-base font-medium text-white bg-indigo-500 shadow-sm hover:bg-indigo-600 active:scale-95 transition-all duration-200 ease-out"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
       >
-        Delete
-      </button>
-      <button
-        class="font-bold rounded-lg text-xl w-32 h-14 bg-[#fb923c] text-white justify-center"
-        type="submit"
-      >
-        Save
-      </button>
-    </section>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+      Save
+    </button>
   </div>
 </form>

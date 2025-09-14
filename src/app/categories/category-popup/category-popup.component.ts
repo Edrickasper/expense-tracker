@@ -22,7 +22,7 @@ export class CategoryPopupComponent implements OnInit {
     private ref: MatDialogRef<CategoryPopupComponent>,
     private categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) private data: any
-  ) {}
+  ) { }
 
   private initForm() {
     let name = '';
@@ -74,10 +74,5 @@ export class CategoryPopupComponent implements OnInit {
     } else {
       document.querySelector('#cat-name')?.classList.add('border-red-600');
     }
-  }
-
-  delete() {
-    this.categoryService.deleteCategory(this.index);
-    this.closePopup();
   }
 }

@@ -13,29 +13,40 @@ import { SnackBarService } from '../services/snack-bar.service';
   styleUrl: './categories.component.css',
 })
 export class CategoriesComponent implements OnInit {
-  categories!: Category[];
   isLoading = false;
+  categories!: Category[];
 
   constructor(
-    private dialog: MatDialog,
     private categoryService: CategoryService,
-    private snackBar: SnackBarService
+    private dialog: MatDialog
   ) { }
 
-  ngOnInit(): void {
-    /* this.isLoading = true
-    this.categoryService
-      .onFetchCategory()
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.snackBar.showError(err);
-        },
-      }); */
+
+  ngOnInit() {
+    this.categories = this.categoryService.getCategory();
+    this.categoryService.categoriesChanged.subscribe(
+      (categories: Category[]) => {
+        this.categories = categories;
+      }
+    );
+  }
+
+  edit(index: number) {
+    const popup = this.dialog.open(CategoryPopupComponent, {
+      disableClose: true,
+      width: '60%',
+      height: 'auto',
+      data: {
+        index: index,
+      },
+    });
+    popup.afterClosed().subscribe((category: Category) => {
+      if (category) this.categoryService.updateCategory(index, category);
+    });
+  }
+
+  delete(i: number) {
+    this.categoryService.deleteCategory(i);
   }
 
   openPopup() {

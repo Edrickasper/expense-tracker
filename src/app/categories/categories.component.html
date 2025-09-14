@@ -1,22 +1,89 @@
-<app-category></app-category>
 <app-spinner *ngIf="isLoading"></app-spinner>
-<button
-  class="fixed bg-indigo-600 p-4 bottom-12 right-12 rounded-lg text-white font-bold flex justify-around"
-  (click)="openPopup()"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="2.5"
-    stroke="currentColor"
-    class="size-6 mr-2"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M12 4.5v15m7.5-7.5h-15"
-    />
-  </svg>
-  Add Category
-</button>
+<section class="max-w-4xl mx-auto px-4 py-6">
+  <!-- Heading Row -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-semibold">Categories</h2>
+    <button
+      class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-indigo-700 active:scale-95 transition-all duration-200 ease-out"
+      (click)="openPopup()"
+    >
+      <i class="bi bi-plus-circle"></i>
+      Add Category
+    </button>
+  </div>
+
+  <ng-container *ngIf="categories.length > 0; else emptyState">
+    <ul class="divide-y divide-gray-200 border border-gray-200 rounded-lg">
+      <li
+        *ngFor="let cat of categories; let i = index"
+        class="flex justify-between items-center p-3 hover:bg-gray-50 transition relative"
+      >
+        <!-- Left Stripe -->
+        <div
+          class="absolute left-0 top-0 h-full w-1"
+          [ngStyle]="{ 'background-color': cat.color }"
+        ></div>
+
+        <!-- Content -->
+        <div class="pl-4 flex justify-between items-center w-full">
+          <!-- Icon + Info -->
+          <div class="flex items-center gap-3">
+            <i
+              class="bi bi-dash-circle text-red-500 text-2xl"
+              *ngIf="cat.type === 'expense'"
+            ></i>
+            <i
+              class="bi bi-plus-circle text-green-500 text-2xl"
+              *ngIf="cat.type === 'income'"
+            ></i>
+
+            <div>
+              <p class="font-medium text-gray-800 flex items-center gap-2">
+                {{ cat.name }}
+                <span *ngIf="cat.favourite" class="text-yellow-500">★</span>
+              </p>
+              <p class="text-xs text-gray-500 capitalize">{{ cat.type }}</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+            <button
+              class="p-2 rounded-full text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition"
+              title="Edit"
+              (click)="edit(i)"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              class="p-2 rounded-full text-gray-500 hover:text-red-600 hover:bg-red-50 transition"
+              title="Delete"
+              (click)="delete(i)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!-- Empty State -->
+  <ng-template #emptyState>
+    <div
+      class="flex flex-col items-center justify-center p-10 text-center border border-dashed border-gray-300 rounded-lg"
+    >
+      <i class="bi bi-folder-x text-4xl text-gray-400 mb-3"></i>
+      <p class="text-gray-600 font-medium mb-1">No categories found</p>
+      <p class="text-sm text-gray-500 mb-4">
+        Start by adding your first category to organize expenses & income.
+      </p>
+      <button
+        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+        (click)="openPopup()"
+      >
+        + Add Category
+      </button>
+    </div>
+  </ng-template>
+</section>

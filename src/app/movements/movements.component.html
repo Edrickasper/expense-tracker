@@ -1,22 +1,64 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
-<app-movement></app-movement>
-<button
-  class="fixed bg-indigo-600 p-4 bottom-12 right-12 rounded-lg text-white font-bold flex justify-around"
-  (click)="openPopup()"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-    class="size-6 mr-2"
+<section class="max-w-4xl mx-auto px-4 py-6">
+  <!-- Heading Row -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold text-gray-800">Movements</h2>
+    <button
+      class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-indigo-500 shadow-sm hover:bg-indigo-600 active:scale-95 transition-all duration-200 ease-out"
+      (click)="openPopup()"
+    >
+      <i class="bi bi-plus-circle"></i>
+      Add Movement
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div
+    *ngIf="!groupedMovements || groupedMovements.length === 0"
+    class="text-center py-12 border border-dashed border-gray-300 rounded-lg bg-gray-50"
   >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M12 4.5v15m7.5-7.5h-15"
-    />
-  </svg>
-  Add Movement
-</button>
+    <i class="bi bi-wallet2 text-4xl text-gray-400 mb-2"></i>
+    <p class="text-gray-500">No movements yet. Start by adding one!</p>
+  </div>
+
+  <!-- Movements List -->
+  <div *ngFor="let group of groupedMovements; let i = index" class="mt-4">
+    <h3 class="text-lg font-bold text-gray-700 mb-2">
+      {{ group.date | date : "fullDate" }}
+    </h3>
+    <div class="flex flex-col items-center">
+      <ul
+        class="divide-y divide-gray-200 border border-gray-200 rounded-lg w-full"
+      >
+        <li
+          *ngFor="let movement of group.items; let i = index"
+          (click)="edit(i)"
+          class="flex justify-between items-center p-3 hover:bg-gray-50 transition cursor-pointer"
+        >
+          <!-- Left section: category + note -->
+          <div>
+            <p class="font-medium text-gray-800">{{ movement.category }}</p>
+            <p class="text-sm text-gray-500">
+              {{ movement.date | date : "mediumDate" }}
+            </p>
+            <p *ngIf="movement.note" class="text-xs text-gray-400 italic">
+              "{{ movement.note }}"
+            </p>
+          </div>
+
+          <!-- Right section: amount -->
+          <div>
+            <span
+              class="font-semibold"
+              [ngClass]="
+                movement.amount >= 0 ? 'text-green-600' : 'text-red-600'
+              "
+            >
+              ₹{{ movement.amount }}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
