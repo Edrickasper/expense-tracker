@@ -1,7 +1,67 @@
-<div
+<!-- <div
   class="bg-[#dfdfdf] h-[calc(100vh-5rem)] w-full flex justify-center items-center"
 >
   <div class="h-auto w-[60%] p-8 bg-white rounded-md">
-    <router-outlet></router-outlet>
   </div>
-</div>
+</div> -->
+
+<section class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Profile Header -->
+  <div class="flex items-center gap-6 mb-8">
+    <img
+      src="https://via.placeholder.com/100"
+      alt="Profile"
+      class="w-24 h-24 rounded-full border-4 border-indigo-500 shadow-md"
+    />
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">John Doe</h1>
+      <p class="text-gray-500">john.doe&#64;example.com</p>
+      <button
+        class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500 text-white text-sm font-medium shadow hover:bg-indigo-600 transition"
+      >
+        <i class="bi bi-pencil"></i>
+        Edit Profile
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    <div class="p-4 bg-white rounded-xl shadow text-center">
+      <p class="text-xl font-semibold text-gray-800">₹12,340</p>
+      <p class="text-sm text-gray-500">Total Income</p>
+    </div>
+    <div class="p-4 bg-white rounded-xl shadow text-center">
+      <p class="text-xl font-semibold text-gray-800">₹7,890</p>
+      <p class="text-sm text-gray-500">Total Expense</p>
+    </div>
+    <div class="p-4 bg-white rounded-xl shadow text-center">
+      <p class="text-xl font-semibold text-gray-800">₹4,450</p>
+      <p class="text-sm text-gray-500">Balance</p>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h2>
+    <ul class="divide-y divide-gray-200">
+      <li class="py-3 flex justify-between">
+        <span class="text-gray-700">Grocery Shopping</span>
+        <span class="text-red-600 font-medium">-₹1,200</span>
+      </li>
+      <li class="py-3 flex justify-between">
+        <span class="text-gray-700">Salary</span>
+        <span class="text-green-600 font-medium">+₹15,000</span>
+      </li>
+      <li class="py-3 flex justify-between">
+        <span class="text-gray-700">Restaurant</span>
+        <span class="text-red-600 font-medium">-₹600</span>
+      </li>
+    </ul>
+    <button
+      class="mt-4 w-full text-center py-2 rounded-lg bg-indigo-50 text-indigo-600 font-medium hover:bg-indigo-100 transition"
+    >
+      View All
+    </button>
+  </div>
+</section>
