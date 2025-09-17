@@ -75,12 +75,4 @@ export class MovementsComponent implements OnInit {
       if (movement) this.movementService.updateMovement(index, movement);
     });
   }
-
-  formatCur(value: number) {
-    const locale = navigator.language;
-    return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: 'INR',
-    }).format(value);
-  }
 }

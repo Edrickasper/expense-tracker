@@ -17,9 +17,13 @@ import { Category } from '../models/category.model';
 export class TrashComponent implements OnInit {
 
   isLoading: boolean = false;
-  movements!: Movement[]
+  movements: Movement[] = [];
   groupedMovements: { date: string; items: any[] }[] = [];
-  categories: Category[] = [];
+  categories: Category[] = [
+    new Category('Food', 'expense', '#dc2626', false),
+    new Category('Clothes', 'expense', '#dc2626', true),
+    new Category('Salary', 'income', '#dc2626', false),
+  ];
 
   constructor(
     private dialog: MatDialog,
@@ -28,8 +32,8 @@ export class TrashComponent implements OnInit {
     private snackBar: SnackBarService
   ) { }
 
-  restoreMovement(mov: Movement) {
-    throw new Error('Method not implemented.');
+  restoreMovement(id: string) {
+    this.trashService.restoreMovement(id)
   }
 
   deleteMovementForever(mov: Movement) {
@@ -50,6 +54,8 @@ export class TrashComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.movements = this.trashService.getTrash();
+    this.groupByDate();
     /* this.trashService
       .fetchTrash()
       .pipe(take(1))
@@ -64,15 +70,16 @@ export class TrashComponent implements OnInit {
           this.snackBar.showError(err);
         },
       }); */
-    this.trashService.trashChanged.subscribe((movements: Movement[]) => {
+    this.trashService.MovTrashChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
+      this.groupByDate();
     });
   }
 
   groupByDate() {
     const grouped: { [key: string]: any[] } = {};
 
-    this.groupedMovements.forEach(tx => {
+    this.movements.forEach(tx => {
       if (!grouped[tx.date]) {
         grouped[tx.date] = [];
       }

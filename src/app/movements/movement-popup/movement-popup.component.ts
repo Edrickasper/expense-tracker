@@ -21,7 +21,7 @@ export class MovementPopupComponent implements OnInit {
   editMode = false;
   isTrashMode = false;
   index!: number;
-  id!: string;
+  id?: string;
   addMovement!: FormGroup;
   categories!: Category[];
 
@@ -31,7 +31,7 @@ export class MovementPopupComponent implements OnInit {
     private movementService: MovementService,
     private categoryService: CategoryService,
     private trashService: TrashService
-  ) {}
+  ) { }
 
   private initForm() {
     let date = this.today;
@@ -90,7 +90,7 @@ export class MovementPopupComponent implements OnInit {
 
   trash() {
     this.movementService.trashMovement(this.index, this.movement);
-    this.trashService.addTrash(this.movement);
+    this.trashService.trashMovement(this.movement);
 
     this.closePopup();
   }

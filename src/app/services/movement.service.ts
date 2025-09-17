@@ -14,9 +14,9 @@ export class MovementService {
   movementsChanged = new Subject<Movement[]>();
 
   private movements: Movement[] = [
-    new Movement('Thu Oct 31 2024', 5000, 'Clothes', 'Diwali'),
-    new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner'),
-    new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali'),
+    new Movement('Thu Oct 31 2024', 5000, 'Clothes', 'Diwali', '101'),
+    new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner', '102'),
+    new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali', '103'),
   ];
   /* 
     onFetchMovement() {

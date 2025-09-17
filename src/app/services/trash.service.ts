@@ -3,13 +3,19 @@ import { Subject, tap } from 'rxjs';
 
 import { Movement } from '../models/movement.model';
 import { DataStorageService } from './data-storage.service';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrashService {
-  trashChanged = new Subject<Movement[]>();
-  private trash: Movement[] = [];
+  MovTrashChanged = new Subject<Movement[]>();
+  private trash: Movement[] = [
+    new Movement('Thu Oct 31 2024', 5000, 'Clothes', 'Diwali', '101'),
+    new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner', '102'),
+    new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali', '103'),
+  ];
+  private catTrash: Category[] = [];
 
   // constructor(private dataStorageService: DataStorageService) {}
 
@@ -21,7 +27,7 @@ export class TrashService {
     return this.dataStorageService.fetchTrash().pipe(
       tap((movements: Movement[]) => {
         this.trash = movements;
-        this.trashChanged.next(this.getTrash());
+        this.MovTrashChanged.next(this.getTrash());
       })
     );
   } */
@@ -30,15 +36,20 @@ export class TrashService {
     return this.trash[index];
   }
 
-  addTrash(movement: Movement) {
+  trashMovement(movement: Movement) {
     this.trash.push(movement);
     // this.dataStorageService.addTrashinDB(movement);
-    this.trashChanged.next(this.getTrash());
+    this.MovTrashChanged.next(this.getTrash());
+  }
+
+  restoreMovement(id: string) {
+    this.trash = this.trash.filter(mov => mov.id !== id)
+    this.MovTrashChanged.next(this.getTrash())
   }
 
   deleteMovement(index: number, movement: Movement) {
     this.trash.splice(index, 1);
     // this.dataStorageService.deleteTrashinDB(movement);
-    this.trashChanged.next(this.getTrash());
+    this.MovTrashChanged.next(this.getTrash());
   }
 }
