@@ -89,21 +89,10 @@ export class MovementPopupComponent implements OnInit {
   }
 
   trash() {
-    this.movementService.trashMovement(this.index, this.movement);
-    this.trashService.trashMovement(this.movement);
-
+    this.movement.deletedDate = new Date().toDateString();
+    this.movementService.removeMovement(this.index, this.movement);
+    this.trashService.addMovement(this.movement);
     this.closePopup();
-  }
-
-  restore() {
-    this.trashService.deleteMovement(this.index, this.movement);
-    this.movementService.addMovement(this.movement);
-    this.ref.close();
-  }
-
-  delete() {
-    this.trashService.deleteMovement(this.index, this.movement);
-    this.ref.close();
   }
 
   closePopup() {

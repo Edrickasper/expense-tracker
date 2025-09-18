@@ -48,7 +48,7 @@ export class MovementService {
     this.movementsChanged.next(this.getmovements());
   }
 
-  trashMovement(index: number, movement: Movement) {
+  removeMovement(index: number, movement: Movement) {
     // this.dataStorageService.deleteMovementinDB(movement);
     this.movements.splice(index, 1);
     this.movementsChanged.next(this.getmovements());

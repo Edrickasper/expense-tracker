@@ -36,20 +36,14 @@ export class TrashService {
     return this.trash[index];
   }
 
-  trashMovement(movement: Movement) {
+  addMovement(movement: Movement) {
     this.trash.push(movement);
     // this.dataStorageService.addTrashinDB(movement);
     this.MovTrashChanged.next(this.getTrash());
   }
 
-  restoreMovement(id: string) {
+  removeMovement(id?: string) {
     this.trash = this.trash.filter(mov => mov.id !== id)
     this.MovTrashChanged.next(this.getTrash())
-  }
-
-  deleteMovement(index: number, movement: Movement) {
-    this.trash.splice(index, 1);
-    // this.dataStorageService.deleteTrashinDB(movement);
-    this.MovTrashChanged.next(this.getTrash());
   }
 }

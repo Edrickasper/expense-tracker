@@ -32,12 +32,13 @@ export class TrashComponent implements OnInit {
     private snackBar: SnackBarService
   ) { }
 
-  restoreMovement(id: string) {
-    this.trashService.restoreMovement(id)
+  restoreMovement(mov: Movement) {
+    this.trashService.removeMovement(mov.id)
+    this.movementService.addMovement(mov)
   }
 
   deleteMovementForever(mov: Movement) {
-    throw new Error('Method not implemented.');
+    this.trashService.removeMovement(mov.id)
   }
 
   restoreCategory(cat: Category) {
@@ -95,24 +96,11 @@ export class TrashComponent implements OnInit {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
-  formatCur(value: number) {
+  /* formatCur(value: number) {
     const locale = navigator.language;
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'INR',
     }).format(value);
-  }
-
-  onrestoreMovement(index: number) {
-    const popup = this.dialog.open(MovementPopupComponent, {
-      disableClose: true,
-      width: '60%',
-      height: 'auto',
-      data: {
-        index: index,
-        isTrashMode: true,
-      },
-    });
-    popup.afterClosed().subscribe();
-  }
+  } */
 }
