@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
 import { Movement } from '../models/movement.model';
 import { MovementService } from '../services/movement.service';
-import { MovementPopupComponent } from '../movements/movement-popup/movement-popup.component';
 import { TrashService } from '../services/trash.service';
 import { SnackBarService } from '../services/snack-bar.service';
 import { take } from 'rxjs';
 import { Category } from '../models/category.model';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-trash',
@@ -19,44 +18,13 @@ export class TrashComponent implements OnInit {
   isLoading: boolean = false;
   movements: Movement[] = [];
   groupedMovements: { date: string; items: any[] }[] = [];
-  categories: Category[] = [
-    new Category('Food', 'expense', '#dc2626', false),
-    new Category('Clothes', 'expense', '#dc2626', true),
-    new Category('Salary', 'income', '#dc2626', false),
-  ];
-
-  constructor(
-    private dialog: MatDialog,
-    private movementService: MovementService,
-    private trashService: TrashService,
-    private snackBar: SnackBarService
-  ) { }
-
-  restoreMovement(mov: Movement) {
-    this.trashService.removeMovement(mov.id)
-    this.movementService.addMovement(mov)
-  }
-
-  deleteMovementForever(mov: Movement) {
-    this.trashService.removeMovement(mov.id)
-  }
-
-  restoreCategory(cat: Category) {
-    throw new Error('Method not implemented.');
-  }
-
-  deleteCategoryForever(cat: Category) {
-    throw new Error('Method not implemented.');
-  }
-
-  emptyTrash() {
-    throw new Error('Method not implemented.');
-  }
+  categories: Category[] = [];
 
   ngOnInit() {
     this.isLoading = true;
-    this.movements = this.trashService.getTrash();
+    this.movements = this.trashService.getTrashedMovement();
     this.groupByDate();
+    this.categories = this.trashService.getTrashedCategory();
     /* this.trashService
       .fetchTrash()
       .pipe(take(1))
@@ -71,10 +39,41 @@ export class TrashComponent implements OnInit {
           this.snackBar.showError(err);
         },
       }); */
-    this.trashService.MovTrashChanged.subscribe((movements: Movement[]) => {
+    this.trashService.trashedMovementChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
       this.groupByDate();
     });
+    this.trashService.trashedCategoryChanged.subscribe((category: Category[]) => this.categories = category)
+  }
+
+  constructor(
+    private movementService: MovementService,
+    private catService: CategoryService,
+    private trashService: TrashService,
+    private snackBar: SnackBarService
+  ) { }
+
+  restoreMovement(mov: Movement) {
+    mov.deletedDate = '';
+    this.trashService.removeMovement(mov.id)
+    this.movementService.addMovement(mov)
+  }
+
+  deleteMovementForever(mov: Movement) {
+    this.trashService.removeMovement(mov.id)
+  }
+
+  restoreCategory(cat: Category) {
+    this.trashService.removeCategory(cat.id);
+    this.catService.addCategory(cat)
+  }
+
+  deleteCategoryForever(cat: Category) {
+    this.trashService.removeCategory(cat.id)
+  }
+
+  emptyTrash() {
+    this.trashService.clearTrash();
   }
 
   groupByDate() {
@@ -87,7 +86,6 @@ export class TrashComponent implements OnInit {
       grouped[tx.date].push(tx);
     });
 
-    // Convert object into array & sort by date (latest first)
     this.groupedMovements = Object.keys(grouped)
       .map(date => ({
         date,

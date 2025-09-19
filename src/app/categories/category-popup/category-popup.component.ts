@@ -14,7 +14,7 @@ export class CategoryPopupComponent implements OnInit {
   category!: Category;
   editMode = false;
   index!: number;
-  id!: string;
+  id?: string;
   addCategory!: FormGroup;
   title = 'Add Category';
 

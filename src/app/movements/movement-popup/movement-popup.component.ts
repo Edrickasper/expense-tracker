@@ -19,7 +19,6 @@ export class MovementPopupComponent implements OnInit {
   today = new Date().toISOString().split('T')[0];
   movement!: Movement;
   editMode = false;
-  isTrashMode = false;
   index!: number;
   id?: string;
   addMovement!: FormGroup;
@@ -44,14 +43,9 @@ export class MovementPopupComponent implements OnInit {
 
     if (this.data) {
       this.index = this.data.index;
-      if (!this.data.isTrashMode) {
-        this.editMode = true;
-        this.movement = this.movementService.getMovementById(this.index);
-        console.log(this.movement);
-      } else {
-        this.isTrashMode = true;
-        this.movement = this.trashService.getTrashById(this.index);
-      }
+      this.editMode = true;
+      this.movement = this.movementService.getMovementById(this.index);
+      console.log(this.movement);
       date = new Date(this.movement.date).toISOString().split('T')[0];
       amount = `${this.movement.amount}`;
       category = this.movement.category;
@@ -69,7 +63,6 @@ export class MovementPopupComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     if (this.editMode) this.title = 'Edit Movement';
-    if (this.isTrashMode) this.title = 'Trashed Movement';
   }
 
   onSubmit() {
