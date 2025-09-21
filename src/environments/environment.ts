@@ -1,11 +1,11 @@
 export const environment = {
-    production: false,
+    production: true,
     firebase: {
-        apiKey: 'AIzaSyAlLdQGuzevgfJiJ-32vFyeevwdAjm11_w',
-        authDomain: 'transaction-manager-ae91b.firebaseapp.com',
-        projectId: 'transaction-manager-ae91b',
-        storageBucket: 'transaction-manager-ae91b.firebasestorage.app',
-        messagingSenderId: '918381907162',
-        appId: '1:918381907162:web:e1cf8e746bdd90797429e3',
+        apiKey: "AIzaSyBQpmIglpkRbiaDmTx_NDx_uKneHt-gkTI",
+        authDomain: "expense-tracker-4a00d.firebaseapp.com",
+        projectId: "expense-tracker-4a00d",
+        storageBucket: "expense-tracker-4a00d.firebasestorage.app",
+        messagingSenderId: "395310990352",
+        appId: "1:395310990352:web:be0972ab3b06779f0f3695"
     }
 };
