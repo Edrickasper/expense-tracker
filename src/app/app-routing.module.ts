@@ -11,6 +11,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { DisplayProfileComponent } from './profile/display-profile/display-profile.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { GuestGuard } from './authentication/guest.guard';
 
 const routes: Routes = [
   {
@@ -24,8 +25,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'trash', component: TrashComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
   {
     path: 'profile',
     component: ProfileComponent,

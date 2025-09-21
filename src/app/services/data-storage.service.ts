@@ -7,6 +7,7 @@ import {
   doc,
   updateDoc,
   collection,
+  setDoc,
 } from '@angular/fire/firestore';
 import { filter, Observable, switchMap, take } from 'rxjs';
 
@@ -21,9 +22,11 @@ export class DataStorageService {
   constructor(
     private firestore: Firestore,
     private authService: AuthenticationService
-  ) {}
+  ) { }
 
+  /* --------------------------------------------------------------------------------------------- */
   // Data fetching
+  /* --------------------------------------------------------------------------------------------- */
   fetchMovements(): Observable<Movement[]> {
     return this.authService.uid$.pipe(
       filter((uid): uid is string => !!uid),
@@ -40,18 +43,34 @@ export class DataStorageService {
     );
   }
 
-  fetchTrash(): Observable<Movement[]> {
+  fetchMovTrash(): Observable<Movement[]> {
     return this.authService.uid$.pipe(
       filter((uid): uid is string => !!uid),
       take(1),
       switchMap((uid: string) => {
         const trashCollection = collection(
           this.firestore,
-          `users/${uid}/trash`
+          `users/${uid}/trash_movements`
         );
         return collectionData(trashCollection, {
           idField: 'id',
         }) as Observable<Movement[]>;
+      })
+    );
+  }
+
+  fetchCatTrash(): Observable<Category[]> {
+    return this.authService.uid$.pipe(
+      filter((uid): uid is string => !!uid),
+      take(1),
+      switchMap((uid: string) => {
+        const trashCollection = collection(
+          this.firestore,
+          `users/${uid}/trash_category`
+        );
+        return collectionData(trashCollection, {
+          idField: 'id',
+        }) as Observable<Category[]>;
       })
     );
   }
@@ -72,9 +91,9 @@ export class DataStorageService {
     );
   }
 
-  // Updating DB according to user operations
-
-  // movements & trash
+  /* ----------------------------------------------------------------------------------------------------- */
+  // movements
+  /* ----------------------------------------------------------------------------------------------------- */
   addMovementinDB(movement: Movement) {
     this.authService.uid$.pipe(take(1)).subscribe((uid) => {
       const movementCollection = collection(
@@ -82,6 +101,7 @@ export class DataStorageService {
         `users/${uid}/movements`
       );
       const { id, ...movementData } = movement;
+      console.log(id)
       return addDoc(movementCollection, { ...movementData });
     });
   }
@@ -104,50 +124,75 @@ export class DataStorageService {
     });
   }
 
-  addTrashinDB(movement: Movement) {
-    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
-      const trashMov = collection(this.firestore, `users/${uid}/trash`);
-      const { id, ...movementData } = movement;
-      addDoc(trashMov, { ...movementData });
-    });
-  }
-
-  deleteTrashinDB(movement: Movement) {
-    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
-      const deleteMov = doc(
-        this.firestore,
-        `users/${uid}/trash/${movement.id}`
-      );
-      deleteDoc(deleteMov);
-    });
-  }
-
+  /* ------------------------------------------------------------------------------------------------- */
   // Categories
-  initialCategories(uid: string, category: Category) {
-    const categoryCollection = collection(
-      this.firestore,
-      `users/${uid}/categories`
-    );
-    const { id, ...categoryData } = category;
-    return addDoc(categoryCollection, { ...categoryData });
-  }
-
+  /* ------------------------------------------------------------------------------------------------- */
   addCategoryinDB(category: Category) {
     this.authService.uid$.pipe(take(1)).subscribe((uid) => {
-      const categoryCollection = collection(
-        this.firestore,
-        `users/${uid}/categories`
-      );
-      const { id, ...categoryData } = category;
-      return addDoc(categoryCollection, { ...categoryData });
+      const categoryRef = doc(collection(this.firestore, `users/${uid}/categories`));
+      const id = categoryRef.id;
+      const categoryData = { ...category, id };
+      console.log(categoryData)
+      setDoc(categoryRef, categoryData);
     });
   }
 
   updateCategoryinDB(category: Category) {
     this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      console.log(category)
       const { id, ...categoryData } = category;
+      console.log(id)
       const movementDoc = doc(this.firestore, `users/${uid}/categories/${id}`);
       return updateDoc(movementDoc, { ...categoryData });
+    });
+  }
+
+  deleteCategoryinDB(category: Category) {
+    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      const deleteCat = doc(
+        this.firestore,
+        `users/${uid}/categories/${category.id}`
+      );
+      deleteDoc(deleteCat);
+    });
+  }
+
+  /* ------------------------------------------------------------------------------------ */
+  // Trash
+  /* ------------------------------------------------------------------------------------ */
+  trashMov(movement: Movement) {
+    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      const trashMov = collection(this.firestore, `users/${uid}/trash_movements`);
+      const { id, ...movementData } = movement;
+      addDoc(trashMov, { ...movementData });
+    });
+  }
+
+  removeTrashedMov(movement: Movement) {
+    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      const deleteMov = doc(
+        this.firestore,
+        `users/${uid}/trash_movements/${movement.id}`
+      );
+      deleteDoc(deleteMov);
+    });
+  }
+
+  trashCat(cat: Category) {
+    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      const trashCat = collection(this.firestore, `users/${uid}/trash_category`);
+      const { id, ...categoryData } = cat;
+      addDoc(trashCat, { ...categoryData });
+    });
+  }
+
+  removeTrashedCat(category: Category) {
+    this.authService.uid$.pipe(take(1)).subscribe((uid) => {
+      const deleteCat = doc(
+        this.firestore,
+        `users/${uid}/trash_category/${category.id}`
+      );
+      deleteDoc(deleteCat);
     });
   }
 }

@@ -35,12 +35,9 @@
             <!-- Content -->
             <div class="pl-4 flex justify-between items-center w-full">
               <div>
-                <p class="font-medium text-gray-800">{{ movement.category }}</p>
-                <p class="text-xs text-gray-500">
-                  Deleted on {{ movement.deletedDate | date : "mediumDate" }}
-                </p>
-                <p *ngIf="movement.note" class="text-xs text-gray-400 italic">
-                  "{{ movement.note }}"
+                <p class="font-medium text-gray-800">{{ movement.purpose }}</p>
+                <p class="text-sm text-gray-400 italic">
+                  {{ movement.category }}
                 </p>
               </div>
 

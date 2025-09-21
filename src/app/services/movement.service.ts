@@ -9,24 +9,24 @@ import { DataStorageService } from './data-storage.service';
   providedIn: 'root',
 })
 export class MovementService {
-  // constructor(private dataStorageService: DataStorageService) { }
+  constructor(private dataStorageService: DataStorageService) { }
 
   movementsChanged = new Subject<Movement[]>();
 
   private movements: Movement[] = [
-    new Movement('Thu Oct 31 2024', 5000, 'Clothes', 'Diwali', '101'),
-    new Movement('Mon Oct 21 2024', 500, 'Food', 'Dinner', '102'),
-    new Movement('Mon Oct 21 2024', 5000, 'Shopping', 'Diwali', '103'),
+    new Movement('Diwali', 'Thu Oct 31 2024', 5000, 'Clothes', 'Diwali', '101'),
+    new Movement('Dinner', 'Mon Oct 21 2024', 500, 'Food', 'Dinner', '102'),
+    new Movement('Diwali', 'Mon Oct 21 2024', 5000, 'Shopping', 'Diwali', '103'),
   ];
-  /* 
-    onFetchMovement() {
-      return this.dataStorageService.fetchMovements().pipe(
-        tap((movements: Movement[]) => {
-          this.movements = movements;
-          this.movementsChanged.next(this.getmovements());
-        })
-      );
-    } */
+
+  onFetchMovement() {
+    return this.dataStorageService.fetchMovements().pipe(
+      tap((movements: Movement[]) => {
+        this.movements = movements;
+        this.movementsChanged.next(this.getMovements());
+      })
+    );
+  }
 
   getMovements() {
     return this.movements.slice();
@@ -37,28 +37,26 @@ export class MovementService {
   }
 
   addMovement(movement: Movement) {
-    this.movements.push(movement);
-    // this.dataStorageService.addMovementinDB(movement);
-    this.movementsChanged.next(this.getMovements());
+    this.dataStorageService.addMovementinDB(movement);
+    this.onFetchMovement();
   }
 
-  updateMovement(index: number, movement: Movement) {
-    this.movements[index] = movement;
-    // this.dataStorageService.updateMovementinDB(movement);
-    this.movementsChanged.next(this.getMovements());
+  updateMovement(movement: Movement) {
+    this.dataStorageService.updateMovementinDB(movement);
+    this.onFetchMovement();
   }
 
   deleteMovementsByCategory(category: string) {
     const toTrash = this.movements.filter(m => m.category === category)
-    this.movements = this.movements.filter(m => m.category !== category);
-    this.movementsChanged.next(this.getMovements());
+    toTrash.forEach((mov) => {
+      this.removeMovement(mov);
+    })
+    this.onFetchMovement();
     return toTrash
   }
 
-  removeMovement(id?: string) {
-    // this.dataStorageService.deleteMovementinDB(movement);
-    // this.movements.splice(index, 1);
-    this.movements = this.movements.filter(mov => mov.id !== id)
-    this.movementsChanged.next(this.getMovements());
+  removeMovement(movement: Movement) {
+    this.dataStorageService.deleteMovementinDB(movement);
+    this.onFetchMovement();
   }
 }

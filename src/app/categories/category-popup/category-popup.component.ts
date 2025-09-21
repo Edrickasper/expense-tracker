@@ -29,6 +29,7 @@ export class CategoryPopupComponent implements OnInit {
     let type = 'expense';
     let color = '#dc2626';
     let favourite = false;
+    this.id = ''
 
     if (this.data) {
       this.editMode = true;
@@ -56,7 +57,12 @@ export class CategoryPopupComponent implements OnInit {
 
   closePopup() {
     this.ref.close();
-    this.addCategory.reset();
+    this.addCategory.reset({
+      catName: '',
+      type: '',
+      color: '#ffffff', // default color
+      favourite: false
+    });
   }
 
   onSubmit() {
@@ -67,10 +73,16 @@ export class CategoryPopupComponent implements OnInit {
         form.catName,
         form.type,
         form.color,
-        form.favourite
+        form.favourite,
+        this.id
       );
       this.ref.close(newCategory);
-      this.addCategory.reset();
+      this.addCategory.reset({
+        catName: '',
+        type: '',
+        color: '#ffffff', // default color
+        favourite: false
+      });
     } else {
       document.querySelector('#cat-name')?.classList.add('border-red-600');
     }

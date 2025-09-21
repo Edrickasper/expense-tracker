@@ -24,6 +24,7 @@ export class HeaderComponent {
       next: (user: User) => {
         if (user) {
           this.user = user;
+          // this.router.navigateByUrl('/')
         } else {
           this.user = null
         }

@@ -16,7 +16,7 @@ import { MovementService } from '../services/movement.service';
 })
 export class CategoriesComponent implements OnInit {
   isLoading = false;
-  categories!: Category[];
+  categories: Category[] = [];
 
   constructor(
     private categoryService: CategoryService,
@@ -27,10 +27,12 @@ export class CategoriesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.categories = this.categoryService.getCategory();
+    this.isLoading = true;
+    this.categoryService.onFetchCategory().subscribe()
     this.categoryService.categoriesChanged.subscribe(
       (categories: Category[]) => {
         this.categories = categories;
+        this.isLoading = false
       }
     );
   }
@@ -45,15 +47,14 @@ export class CategoriesComponent implements OnInit {
       },
     });
     popup.afterClosed().subscribe((category: Category) => {
-      if (category) this.categoryService.updateCategory(index, category);
+      if (category) this.categoryService.updateCategory(category);
     });
   }
 
   delete(cat: Category) {
-    this.categoryService.deleteCategory(cat.id);
+    this.categoryService.deleteCategory(cat);
     const movementsToTrash = this.movementService.deleteMovementsByCategory(cat.name)
     movementsToTrash.forEach(mov => {
-      mov.deletedDate = new Date().toDateString();
       this.trashService.addMovement(mov);
     })
     this.trashService.addCategory(cat)

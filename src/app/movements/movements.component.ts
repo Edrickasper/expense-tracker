@@ -24,12 +24,13 @@ export class MovementsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.movements = this.movementService.getMovements();
+    this.isLoading = true
     this.movementService.movementsChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
       this.groupByDate();
+      this.isLoading = false
     });
-    this.groupByDate();
+    this.movementService.onFetchMovement().subscribe();
   }
 
   openPopup() {
@@ -72,7 +73,7 @@ export class MovementsComponent implements OnInit {
       },
     });
     popup.afterClosed().subscribe((movement: Movement) => {
-      if (movement) this.movementService.updateMovement(index, movement);
+      if (movement) this.movementService.updateMovement(movement);
     });
   }
 }

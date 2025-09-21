@@ -37,7 +37,8 @@
         >
           <!-- Left section: category + note -->
           <div>
-            <p class="font-medium text-gray-800">{{ movement.category }}</p>
+            <p class="font-medium text-gray-800">{{ movement.purpose }}</p>
+            <p class="text-sm text-gray-500">{{ movement.category }}</p>
             <p class="text-sm text-gray-500">
               {{ movement.date | date : "mediumDate" }}
             </p>

@@ -14,7 +14,21 @@
   </header>
 
   <!-- Content -->
-  <div mat-dialog-content class="space-y-6">
+  <div mat-dialog-content class="space-y-5">
+    <!-- Purpose -->
+    <section>
+      <label for="purpose" class="block text-lg font-medium mb-2"
+        >Purpose</label
+      >
+      <input
+        type="text"
+        id="purpose"
+        placeholder="Enter Purpose"
+        class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:outline-none"
+        formControlName="purpose"
+      />
+    </section>
+
     <!-- Date -->
     <section>
       <label for="date" class="block text-lg font-medium mb-2">Date</label>

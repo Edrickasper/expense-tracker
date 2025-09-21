@@ -22,28 +22,15 @@ export class TrashComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.movements = this.trashService.getTrashedMovement();
-    this.groupByDate();
-    this.categories = this.trashService.getTrashedCategory();
-    /* this.trashService
-      .fetchTrash()
-      .pipe(take(1))
-      .subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.movements = res
-          this.groupByDate();
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.snackBar.showError(err);
-        },
-      }); */
+    this.trashService.onFetchCatTrash().subscribe();
+    this.trashService.onFetchMovTrash().subscribe();
     this.trashService.trashedMovementChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
       this.groupByDate();
     });
-    this.trashService.trashedCategoryChanged.subscribe((category: Category[]) => this.categories = category)
+    this.trashService.trashedCategoryChanged.subscribe((category: Category[]) => {
+      this.categories = category
+    })
   }
 
   constructor(
@@ -54,22 +41,21 @@ export class TrashComponent implements OnInit {
   ) { }
 
   restoreMovement(mov: Movement) {
-    mov.deletedDate = '';
-    this.trashService.removeMovement(mov.id)
+    this.trashService.removeMovement(mov)
     this.movementService.addMovement(mov)
   }
 
   deleteMovementForever(mov: Movement) {
-    this.trashService.removeMovement(mov.id)
+    this.trashService.removeMovement(mov)
   }
 
   restoreCategory(cat: Category) {
-    this.trashService.removeCategory(cat.id);
+    this.trashService.removeCategory(cat);
     this.catService.addCategory(cat)
   }
 
   deleteCategoryForever(cat: Category) {
-    this.trashService.removeCategory(cat.id)
+    this.trashService.removeCategory(cat)
   }
 
   emptyTrash() {

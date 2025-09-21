@@ -7,7 +7,6 @@ import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { MovementService } from '../../services/movement.service';
 import { TrashService } from '../../services/trash.service';
-import { DataStorageService } from '../../services/data-storage.service';
 
 @Component({
   selector: 'app-movement-popup',
@@ -37,22 +36,29 @@ export class MovementPopupComponent implements OnInit {
     let amount = '';
     let category = '';
     let note = '';
+    let purpose = '';
     this.id = '';
 
-    this.categories = this.categoryService.getCategory();
+    this.categoryService.onFetchCategory().subscribe({
+      next: (cat) => {
+        this.categories = cat
+      }
+    });
 
     if (this.data) {
       this.index = this.data.index;
       this.editMode = true;
       this.movement = this.movementService.getMovementById(this.index);
-      console.log(this.movement);
+      purpose = this.movement.purpose;
       date = new Date(this.movement.date).toISOString().split('T')[0];
       amount = `${this.movement.amount}`;
       category = this.movement.category;
-      note = this.movement.note;
+      note = this.movement.note ? this.movement.note : '';
       this.id = this.movement.id;
+      console.log(this.id)
     }
     this.addMovement = new FormGroup({
+      purpose: new FormControl(purpose, [Validators.required]),
       date: new FormControl(date, [Validators.required]),
       amount: new FormControl(amount, [Validators.required]),
       category: new FormControl(category, [Validators.required]),
@@ -70,6 +76,7 @@ export class MovementPopupComponent implements OnInit {
 
     if (this.addMovement.valid) {
       const newMovement = new Movement(
+        form.purpose,
         new Date(form.date).toDateString(),
         form.amount,
         form.category,
@@ -82,8 +89,7 @@ export class MovementPopupComponent implements OnInit {
   }
 
   trash() {
-    this.movement.deletedDate = new Date().toDateString();
-    this.movementService.removeMovement(this.movement.id);
+    this.movementService.removeMovement(this.movement);
     this.trashService.addMovement(this.movement);
     this.closePopup();
   }

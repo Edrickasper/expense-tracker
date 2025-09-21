@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { retry, Subject, tap } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 
 import { Movement } from '../models/movement.model';
 import { DataStorageService } from './data-storage.service';
@@ -14,7 +14,7 @@ export class TrashService {
   private trashedMovement: Movement[] = [];
   private trashedCategory: Category[] = [];
 
-  // constructor(private dataStorageService: DataStorageService) {}
+  constructor(private dataStorageService: DataStorageService) { }
 
   getTrashedMovement() {
     return this.trashedMovement.slice();
@@ -24,33 +24,42 @@ export class TrashService {
     return this.trashedCategory.slice();
   }
 
-  /* fetchTrash() {
-    return this.dataStorageService.fetchTrash().pipe(
+  onFetchMovTrash() {
+    return this.dataStorageService.fetchMovTrash().pipe(
       tap((movements: Movement[]) => {
-        this.trash = movements;
-        this.movTrashChanged.next(this.getTrashedMovement());
+        this.trashedMovement = movements;
+        this.trashedMovementChanged.next(this.getTrashedMovement());
       })
     );
-  } */
-
-  addMovement(movement: Movement) {
-    this.trashedMovement.push(movement);
-    this.trashedMovementChanged.next(this.getTrashedMovement());
   }
 
-  removeMovement(id?: string) {
-    this.trashedMovement = this.trashedMovement.filter(mov => mov.id !== id)
-    this.trashedMovementChanged.next(this.getTrashedMovement())
+  onFetchCatTrash() {
+    return this.dataStorageService.fetchCatTrash().pipe(
+      tap((categories: Category[]) => {
+        this.trashedCategory = categories;
+        this.trashedCategoryChanged.next(this.getTrashedCategory());
+      })
+    );
+  }
+
+  addMovement(movement: Movement) {
+    this.dataStorageService.trashMov(movement)
+    this.onFetchMovTrash();
+  }
+
+  removeMovement(movement: Movement) {
+    this.dataStorageService.removeTrashedMov(movement)
+    this.onFetchMovTrash();
   }
 
   addCategory(cat: Category) {
-    this.trashedCategory.push(cat);
-    this.trashedCategoryChanged.next(this.getTrashedCategory());
+    this.dataStorageService.trashCat(cat);
+    this.onFetchCatTrash();
   }
 
-  removeCategory(id?: string) {
-    this.trashedCategory = this.trashedCategory.filter(cat => cat.id !== id)
-    this.trashedCategoryChanged.next(this.getTrashedCategory());
+  removeCategory(cat: Category) {
+    this.dataStorageService.removeTrashedCat(cat);
+    this.onFetchCatTrash();
   }
 
   clearTrash() {
