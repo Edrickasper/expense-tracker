@@ -19,7 +19,7 @@ export class RegisterComponent {
     private router: Router,
     private snackBar: SnackBarService,
     private catService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.register = new FormGroup({
@@ -38,7 +38,7 @@ export class RegisterComponent {
       .subscribe({
         next: () => {
           this.isLoading = false;
-          this.snackBar.showSuccess('Registered Successfully');
+          this.snackBar.showSuccess('Registered Successfully, Verify email before login');
           this.router.navigateByUrl('/login');
         },
         error: (err) => {

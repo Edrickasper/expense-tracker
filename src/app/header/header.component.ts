@@ -24,9 +24,9 @@ export class HeaderComponent {
       next: (user: User) => {
         if (user) {
           this.user = user;
-          // this.router.navigateByUrl('/')
         } else {
           this.user = null
+          this.router.navigateByUrl('/login')
         }
       },
     });
@@ -48,5 +48,6 @@ export class HeaderComponent {
     this.authService.signOut();
     this.snackBar.showSuccess('Successfully Signed out');
     this.router.navigate(['/login']);
+    this.menuOpen = false;
   }
 }

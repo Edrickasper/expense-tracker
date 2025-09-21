@@ -2,6 +2,7 @@ import { EventEmitter, inject, Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -54,6 +55,9 @@ export class AuthenticationService {
       email,
       password
     ).then((userCredentials) => {
+      sendEmailVerification(userCredentials.user).then(() => {
+      });
+
       this.addCatinDB.emit(userCredentials.user.uid);
       console.log(username)
       updateProfile(userCredentials.user, {
@@ -66,11 +70,13 @@ export class AuthenticationService {
   }
 
   updateProfile(username: string, email: string) {
-    // updateProfile(this.curUser, { displayName: username });
-    // verifyBeforeUpdateEmail(this.curUser, email);
-    // updateEmail(this.curUser, email).then((resp) => {
-    //   console.log(resp);
-    // });
+    this.user$.subscribe((user: User) => {
+      updateProfile(user, { displayName: username });
+      verifyBeforeUpdateEmail(user, email);
+      updateEmail(user, email).then((resp) => {
+        console.log(resp);
+      })
+    });
   }
 
   signOut(): Observable<void> {

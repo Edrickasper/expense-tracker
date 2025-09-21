@@ -10,17 +10,21 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrl: './edit-profile.component.css',
 })
 export class EditProfileComponent implements OnInit {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) { }
 
-  profile!: FormGroup;
+  profile: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    profession: new FormControl(''),
+  });
   user!: User | null;
 
   ngOnInit() {
-    this.onInit();
     this.authService.user$.subscribe({
       next: (user: any) => {
         if (user) {
           this.user = user;
+          this.onInit();
         }
       },
     });
@@ -29,16 +33,18 @@ export class EditProfileComponent implements OnInit {
   onInit() {
     this.profile = new FormGroup({
       name: new FormControl(this.user?.displayName, [Validators.required]),
-      email: new FormControl(this.user?.email, [Validators.required]),
-      phoneNo: new FormControl(this.user?.phoneNumber),
+      email: new FormControl(this.user?.email, [Validators.required, Validators.email]),
+      profession: new FormControl(''),
     });
   }
 
-  verifyEmail() {}
+  verifyEmail() { }
 
   onSubmit() {
     const form = this.profile.getRawValue();
-    console.log(form);
-    this.authService.updateProfile(form.name, form.email);
+    if (this.profile.valid) {
+      console.log('dwsf')
+      this.authService.updateProfile(form.name, form.email);
+    }
   }
 }
