@@ -24,7 +24,7 @@ export class MovementsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.movements = this.movementService.getmovements();
+    this.movements = this.movementService.getMovements();
     this.movementService.movementsChanged.subscribe((movements: Movement[]) => {
       this.movements = movements;
       this.groupByDate();

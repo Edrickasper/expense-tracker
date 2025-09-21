@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@angular/fire/auth';
 
@@ -13,13 +13,23 @@ import { AuthenticationService } from '../services/authentication.service';
 export class HeaderComponent {
   menuOpen: boolean = false;
   @ViewChild('dropdown') dropdown!: ElementRef;
-  @Input() user!: User | null;
+  user: User | null = null;
 
   constructor(
     private authService: AuthenticationService,
     private router: Router,
     private snackBar: SnackBarService
-  ) { }
+  ) {
+    this.authService.user$.subscribe({
+      next: (user: User) => {
+        if (user) {
+          this.user = user;
+        } else {
+          this.user = null
+        }
+      },
+    });
+  }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

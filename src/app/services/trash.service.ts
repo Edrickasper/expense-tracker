@@ -12,11 +12,7 @@ export class TrashService {
   trashedMovementChanged = new Subject<Movement[]>();
   trashedCategoryChanged = new Subject<Category[]>();
   private trashedMovement: Movement[] = [];
-  private trashedCategory: Category[] = [
-    new Category('Food', 'expense', '#dc2626', false, '101'),
-    new Category('Clothes', 'expense', '#dc2626', true, '102'),
-    new Category('Salary', 'income', '#dc2626', false, '103'),
-  ];
+  private trashedCategory: Category[] = [];
 
   // constructor(private dataStorageService: DataStorageService) {}
 

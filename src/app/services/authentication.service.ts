@@ -39,7 +39,7 @@ export class AuthenticationService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => {});
+    ).then(() => { });
 
     return from(promise);
   }
@@ -55,6 +55,7 @@ export class AuthenticationService {
       password
     ).then((userCredentials) => {
       this.addCatinDB.emit(userCredentials.user.uid);
+      console.log(username)
       updateProfile(userCredentials.user, {
         displayName: username,
         photoURL:
@@ -73,6 +74,6 @@ export class AuthenticationService {
   }
 
   signOut(): Observable<void> {
-    return from(signOut(this.firebaseAuth).then(() => {}));
+    return from(signOut(this.firebaseAuth).then(() => { }));
   }
 }

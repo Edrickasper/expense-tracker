@@ -6,6 +6,8 @@ import { CategoryPopupComponent } from './category-popup/category-popup.componen
 import { CategoryService } from '../services/category.service';
 import { take } from 'rxjs';
 import { SnackBarService } from '../services/snack-bar.service';
+import { TrashService } from '../services/trash.service';
+import { MovementService } from '../services/movement.service';
 
 @Component({
   selector: 'app-categories',
@@ -18,7 +20,9 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private dialog: MatDialog
+    private trashService: TrashService,
+    private dialog: MatDialog,
+    private movementService: MovementService
   ) { }
 
 
@@ -45,8 +49,14 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  delete(i: number) {
-    this.categoryService.deleteCategory(i);
+  delete(cat: Category) {
+    this.categoryService.deleteCategory(cat.id);
+    const movementsToTrash = this.movementService.deleteMovementsByCategory(cat.name)
+    movementsToTrash.forEach(mov => {
+      mov.deletedDate = new Date().toDateString();
+      this.trashService.addMovement(mov);
+    })
+    this.trashService.addCategory(cat)
   }
 
   openPopup() {

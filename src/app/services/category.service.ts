@@ -12,9 +12,9 @@ export class CategoryService {
   categoriesChanged = new Subject<Category[]>();
 
   private categories: Category[] = [
-    new Category('Food', 'expense', '#dc2626', false),
-    new Category('Clothes', 'expense', '#dc2626', true),
-    new Category('Salary', 'income', '#dc2626', false),
+    new Category('Food', 'expense', '#dc2626', false, '101'),
+    new Category('Clothes', 'expense', '#dc2626', true, '102'),
+    new Category('Salary', 'income', '#dc2626', false, '103'),
   ];
 
   constructor(
@@ -54,12 +54,12 @@ export class CategoryService {
     this.categoriesChanged.next(this.getCategory());
   }
 
-  getCategoryById(id: number) {
-    return this.categories[id];
+  getCategoryById(index: number) {
+    return this.categories[index];
   }
 
-  deleteCategory(index: number) {
-    this.categories.splice(index, 1);
+  deleteCategory(id?: string) {
+    this.categories = this.categories.filter(cat => cat.id !== id)
     this.categoriesChanged.next(this.getCategory());
   }
 }

@@ -28,7 +28,7 @@ export class MovementService {
       );
     } */
 
-  getmovements() {
+  getMovements() {
     return this.movements.slice();
   }
 
@@ -39,18 +39,26 @@ export class MovementService {
   addMovement(movement: Movement) {
     this.movements.push(movement);
     // this.dataStorageService.addMovementinDB(movement);
-    this.movementsChanged.next(this.getmovements());
+    this.movementsChanged.next(this.getMovements());
   }
 
   updateMovement(index: number, movement: Movement) {
     this.movements[index] = movement;
     // this.dataStorageService.updateMovementinDB(movement);
-    this.movementsChanged.next(this.getmovements());
+    this.movementsChanged.next(this.getMovements());
   }
 
-  removeMovement(index: number, movement: Movement) {
+  deleteMovementsByCategory(category: string) {
+    const toTrash = this.movements.filter(m => m.category === category)
+    this.movements = this.movements.filter(m => m.category !== category);
+    this.movementsChanged.next(this.getMovements());
+    return toTrash
+  }
+
+  removeMovement(id?: string) {
     // this.dataStorageService.deleteMovementinDB(movement);
-    this.movements.splice(index, 1);
-    this.movementsChanged.next(this.getmovements());
+    // this.movements.splice(index, 1);
+    this.movements = this.movements.filter(mov => mov.id !== id)
+    this.movementsChanged.next(this.getMovements());
   }
 }
